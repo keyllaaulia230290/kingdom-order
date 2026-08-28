@@ -20,8 +20,6 @@ export async function POST(request: Request) {
     const secretToken = process.env.BQ_SECRET_TOKEN;
 
     if (!accountId || !secretToken) {
-      console.error("BQ_ACCOUNT_ID / BQ_SECRET_TOKEN belum tersedia");
-
       return NextResponse.json(
         {
           success: false,
@@ -31,36 +29,47 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await fetch("https://app.buatqris.site/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+    const response = await fetch(
+      "https://api.buatqris.site",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          action: "api_create_qris",
+          account_id: accountId,
+          secret_token: secretToken,
+          amount: String(amount),
+          description:
+            body.description || "AJRASTORE Bot Service",
+          qris_method: "qris_two",
+        }),
       },
-      body: new URLSearchParams({
-        action: "api_create_qris",
-        account_id: accountId,
-        secret_token: secretToken,
-        amount: String(amount),
-        description: body.description || "Kingdom Order",
-        qris_method: "qris_two",
-      }),
-    });
+    );
 
-    const data = await response.json();
+    const result = await response.json();
 
-    console.log("BuatQris response:", data);
+    console.log("BuatQris create:", result);
 
-    if (!response.ok || !data.success) {
+    if (!response.ok || !result.success) {
       return NextResponse.json(
         {
           success: false,
-          error: data.message || data.error || "Gagal membuat QRIS",
+          error:
+            result.message ||
+            result.error ||
+            "Gagal membuat QRIS",
         },
         { status: 500 },
       );
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({
+      success: true,
+      data: result.data,
+    });
   } catch (error) {
     console.error("CREATE QRIS ERROR:", error);
 

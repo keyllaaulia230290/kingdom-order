@@ -4,7 +4,9 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const transactionId = String(body.transactionId ?? "").trim();
+    const transactionId = String(
+      body.transactionId ?? "",
+    ).trim();
 
     if (!transactionId) {
       return NextResponse.json(
@@ -29,34 +31,44 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await fetch("https://app.buatqris.site/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+    const response = await fetch(
+      "https://api.buatqris.site",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          action: "api_check_status",
+          account_id: accountId,
+          secret_token: secretToken,
+          transaction_id: transactionId,
+        }),
       },
-      body: new URLSearchParams({
-        action: "api_check_status",
-        account_id: accountId,
-        secret_token: secretToken,
-        transaction_id: transactionId,
-      }),
-    });
+    );
 
-    const data = await response.json();
+    const result = await response.json();
 
-    console.log("BuatQris status:", data);
+    console.log("BuatQris status:", result);
 
-    if (!response.ok || !data.success) {
+    if (!response.ok || !result.success) {
       return NextResponse.json(
         {
           success: false,
-          error: data.message || "Gagal mengecek pembayaran",
+          error:
+            result.message ||
+            result.error ||
+            "Gagal mengecek pembayaran",
         },
         { status: 500 },
       );
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({
+      success: true,
+      data: result.data,
+    });
   } catch (error) {
     console.error("CHECK QRIS ERROR:", error);
 
