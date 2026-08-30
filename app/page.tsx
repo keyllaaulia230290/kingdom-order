@@ -17,6 +17,13 @@ const menus = [
     external: true,
   },
   {
+    icon: "👥",
+    title: "DAFTAR MEMBER RSS",
+    subtitle: "Harga Lebih Murah",
+    href: "https://belirss.ajra.store",
+    external: true,
+  },
+  {
     title: "PASANG BOT",
     subtitle: "Pasang bot baru",
     icon: "🤖",
