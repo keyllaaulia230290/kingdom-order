@@ -41,12 +41,6 @@ const menus = [
     icon: "◷",
     href: "/cek-masa-aktif",
   },
-  {
-    title: "AFFILIATE",
-    subtitle: "Program partner",
-    icon: "✦",
-    href: "/affiliate",
-  },
 ];
 
 export default function Home() {
