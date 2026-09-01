@@ -7,13 +7,9 @@ type Customer = {
   id: string;
   name: string;
   phone: string;
-  bot_name: string | null;
-  bot_status: string;
-  started_at: string;
-  expired_at: string;
 };
 
-type ModalType = "add" | "edit" | "extend" | null;
+type ModalType = "add" | "edit" | null;
 
 export default function CustomerPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -29,18 +25,13 @@ export default function CustomerPage() {
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [botName, setBotName] = useState("");
-  const [startedAt, setStartedAt] = useState("");
-  const [expiredAt, setExpiredAt] = useState("");
-
-  const [extensionDays, setExtensionDays] = useState("30");
 
   async function loadCustomers() {
     setLoading(true);
 
     const { data, error } = await supabase
       .from("bot_customers")
-      .select("id, name, phone, bot_name, bot_status, started_at, expired_at")
+      .select("id, name, phone")
       .order("created_at", {
         ascending: false,
       });
@@ -59,42 +50,15 @@ export default function CustomerPage() {
     loadCustomers();
   }, []);
 
-  function formatDate(date: string) {
-    if (!date) return "-";
-
-    return new Date(date).toLocaleDateString("id-ID", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  }
-
-  function getStatus(status: string) {
-    if (status === "active") return "AKTIF";
-    if (status === "suspended") return "SUSPEND";
-    if (status === "expired") return "EXPIRED";
-
-    return status.toUpperCase();
-  }
-
   function resetForm() {
     setName("");
     setPhone("");
-    setBotName("");
-    setStartedAt("");
-    setExpiredAt("");
-    setExtensionDays("30");
     setErrorMessage("");
     setSelectedCustomer(null);
   }
 
   function openAddModal() {
     resetForm();
-
-    const today = new Date();
-    const todayString = today.toISOString().split("T")[0];
-
-    setStartedAt(todayString);
     setModal("add");
   }
 
@@ -103,21 +67,9 @@ export default function CustomerPage() {
 
     setName(customer.name);
     setPhone(customer.phone);
-    setBotName(customer.bot_name ?? "");
-
-    setStartedAt(customer.started_at ? customer.started_at.split("T")[0] : "");
-
-    setExpiredAt(customer.expired_at ? customer.expired_at.split("T")[0] : "");
 
     setErrorMessage("");
     setModal("edit");
-  }
-
-  function openExtendModal(customer: Customer) {
-    setSelectedCustomer(customer);
-    setExtensionDays("30");
-    setErrorMessage("");
-    setModal("extend");
   }
 
   function closeModal() {
@@ -140,25 +92,11 @@ export default function CustomerPage() {
       return;
     }
 
-    if (!expiredAt) {
-      setErrorMessage("Tanggal expired wajib diisi.");
-      return;
-    }
-
-    if (startedAt && expiredAt < startedAt) {
-      setErrorMessage("Tanggal expired tidak boleh sebelum tanggal mulai.");
-      return;
-    }
-
     setSaving(true);
 
     const { error } = await supabase.from("bot_customers").insert({
       name: name.trim(),
       phone: phone.trim(),
-      bot_name: botName.trim() || null,
-      bot_status: "active",
-      started_at: new Date(`${startedAt}T00:00:00`).toISOString(),
-      expired_at: new Date(`${expiredAt}T23:59:59`).toISOString(),
     });
 
     if (error) {
@@ -189,16 +127,6 @@ export default function CustomerPage() {
       return;
     }
 
-    if (!expiredAt) {
-      setErrorMessage("Tanggal expired wajib diisi.");
-      return;
-    }
-
-    if (startedAt && expiredAt < startedAt) {
-      setErrorMessage("Tanggal expired tidak boleh sebelum tanggal mulai.");
-      return;
-    }
-
     setSaving(true);
 
     const { error } = await supabase
@@ -206,67 +134,11 @@ export default function CustomerPage() {
       .update({
         name: name.trim(),
         phone: phone.trim(),
-        bot_name: botName.trim() || null,
-        started_at: new Date(`${startedAt}T00:00:00`).toISOString(),
-        expired_at: new Date(`${expiredAt}T23:59:59`).toISOString(),
       })
       .eq("id", selectedCustomer.id);
 
     if (error) {
       console.error("UPDATE CUSTOMER ERROR:", error);
-      setErrorMessage(error.message);
-      setSaving(false);
-      return;
-    }
-
-    await loadCustomers();
-
-    setSaving(false);
-    closeModal();
-  }
-
-  async function extendCustomer() {
-    if (!selectedCustomer) return;
-
-    const days = Number(extensionDays);
-
-    if (!days || days <= 0) {
-      setErrorMessage("Durasi perpanjangan tidak valid.");
-      return;
-    }
-
-    setSaving(true);
-    setErrorMessage("");
-
-    const currentExpired = selectedCustomer.expired_at
-      ? new Date(selectedCustomer.expired_at)
-      : new Date();
-
-    const now = new Date();
-
-    /*
-      Kalau customer sudah expired,
-      perpanjangan dimulai dari hari ini.
-
-      Kalau belum expired,
-      perpanjangan ditambahkan dari tanggal expired lama.
-    */
-    const baseDate = currentExpired > now ? currentExpired : now;
-
-    const newExpired = new Date(baseDate);
-
-    newExpired.setDate(newExpired.getDate() + days);
-
-    const { error } = await supabase
-      .from("bot_customers")
-      .update({
-        expired_at: newExpired.toISOString(),
-        bot_status: "active",
-      })
-      .eq("id", selectedCustomer.id);
-
-    if (error) {
-      console.error("EXTEND CUSTOMER ERROR:", error);
       setErrorMessage(error.message);
       setSaving(false);
       return;
@@ -312,7 +184,7 @@ export default function CustomerPage() {
 
             <h1>Customer</h1>
 
-            <p>Kelola customer dan data WhatsApp bot.</p>
+            <p>Kelola data customer dan nomor WhatsApp.</p>
           </div>
 
           <a href="/admin" className="admin-back">
@@ -364,10 +236,6 @@ export default function CustomerPage() {
                   <tr>
                     <th>CUSTOMER</th>
                     <th>WHATSAPP</th>
-                    <th>BOT</th>
-                    <th>STATUS</th>
-                    <th>MULAI</th>
-                    <th>EXPIRED</th>
                     <th>AKSI</th>
                   </tr>
                 </thead>
@@ -381,20 +249,6 @@ export default function CustomerPage() {
 
                       <td>{customer.phone}</td>
 
-                      <td>{customer.bot_name || "-"}</td>
-
-                      <td>
-                        <span
-                          className={`customer-status ${customer.bot_status}`}
-                        >
-                          {getStatus(customer.bot_status)}
-                        </span>
-                      </td>
-
-                      <td>{formatDate(customer.started_at)}</td>
-
-                      <td>{formatDate(customer.expired_at)}</td>
-
                       <td>
                         <div className="customer-actions">
                           <button
@@ -403,14 +257,6 @@ export default function CustomerPage() {
                             onClick={() => openEditModal(customer)}
                           >
                             EDIT
-                          </button>
-
-                          <button
-                            type="button"
-                            className="customer-action extend"
-                            onClick={() => openExtendModal(customer)}
-                          >
-                            +30 HARI
                           </button>
 
                           <button
@@ -494,39 +340,6 @@ export default function CustomerPage() {
                   onChange={(event) => setPhone(event.target.value)}
                 />
               </div>
-
-              <div className="customer-form-group">
-                <label>NAMA BOT</label>
-
-                <input
-                  type="text"
-                  placeholder="Contoh: AjraBot"
-                  value={botName}
-                  onChange={(event) => setBotName(event.target.value)}
-                />
-              </div>
-
-              <div className="customer-form-row">
-                <div className="customer-form-group">
-                  <label>TANGGAL MULAI</label>
-
-                  <input
-                    type="date"
-                    value={startedAt}
-                    onChange={(event) => setStartedAt(event.target.value)}
-                  />
-                </div>
-
-                <div className="customer-form-group">
-                  <label>TANGGAL EXPIRED</label>
-
-                  <input
-                    type="date"
-                    value={expiredAt}
-                    onChange={(event) => setExpiredAt(event.target.value)}
-                  />
-                </div>
-              </div>
             </div>
 
             <div className="customer-form-actions">
@@ -550,97 +363,6 @@ export default function CustomerPage() {
                   : modal === "add"
                     ? "SIMPAN CUSTOMER"
                     : "SIMPAN PERUBAHAN"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* =====================================================
-          EXTEND MODAL
-      ===================================================== */}
-
-      {modal === "extend" && selectedCustomer && (
-        <div
-          className="customer-modal-overlay"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              closeModal();
-            }
-          }}
-        >
-          <div className="customer-modal">
-            <div className="customer-modal-header">
-              <div>
-                <span>BOT SUBSCRIPTION</span>
-
-                <h2>Perpanjang Masa Aktif</h2>
-
-                <p>{selectedCustomer.name}</p>
-              </div>
-
-              <button
-                type="button"
-                className="customer-modal-close"
-                onClick={closeModal}
-                disabled={saving}
-              >
-                ×
-              </button>
-            </div>
-
-            {errorMessage && (
-              <div className="customer-form-error">⚠️ {errorMessage}</div>
-            )}
-
-            <div className="extension-content">
-              <div className="extension-info">
-                <span>EXPIRED SAAT INI</span>
-
-                <strong>{formatDate(selectedCustomer.expired_at)}</strong>
-              </div>
-
-              <div className="customer-form-group">
-                <label>DURASI PERPANJANGAN</label>
-
-                <select
-                  value={extensionDays}
-                  onChange={(event) => setExtensionDays(event.target.value)}
-                >
-                  <option value="7">7 Hari</option>
-
-                  <option value="14">14 Hari</option>
-
-                  <option value="30">30 Hari</option>
-
-                  <option value="60">60 Hari</option>
-
-                  <option value="90">90 Hari</option>
-
-                  <option value="180">180 Hari</option>
-
-                  <option value="365">365 Hari</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="customer-form-actions">
-              <button
-                type="button"
-                className="customer-cancel-button"
-                onClick={closeModal}
-                disabled={saving}
-              >
-                BATAL
-              </button>
-
-              <button
-                type="button"
-                className="admin-primary-button"
-                onClick={extendCustomer}
-                disabled={saving}
-              >
-                {saving ? "MEMPROSES..." : "PERPANJANG SEKARANG"}
               </button>
             </div>
           </div>

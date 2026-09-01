@@ -32,6 +32,7 @@ export default function BotAccountPage() {
   const [nickname, setNickname] = useState("");
   const [botCode, setBotCode] = useState("");
   const [packageName, setPackageName] = useState("1 Bulan");
+  const [expiredAt, setExpiredAt] = useState("");
 
   async function loadData() {
     setLoading(true);
@@ -76,6 +77,7 @@ export default function BotAccountPage() {
     setNickname("");
     setBotCode("");
     setPackageName("1 Bulan");
+    setExpiredAt("");
   }
 
   async function addBot(e: React.FormEvent<HTMLFormElement>) {
@@ -96,37 +98,20 @@ export default function BotAccountPage() {
       return;
     }
 
-    setSaving(true);
-
-    const startedAt = new Date();
-    const expiredAt = new Date(startedAt);
-
-    // Set the expiration date based on the selected package
-    switch (packageName) {
-      case "1 Bulan":
-        expiredAt.setMonth(expiredAt.getMonth() + 1);
-        break;
-      case "3 Bulan":
-        expiredAt.setMonth(expiredAt.getMonth() + 3);
-        break;
-      case "6 Bulan":
-        expiredAt.setMonth(expiredAt.getMonth() + 6);
-        break;
-      case "1 Tahun":
-        expiredAt.setFullYear(expiredAt.getFullYear() + 1);
-        break;
-      case "Permanent":
-        expiredAt.setDate(expiredAt.getDate() + 99999);
-        break;
+    if (!expiredAt) {
+      alert("Tanggal expired wajib diisi.");
+      return;
     }
+
+    setSaving(true);
 
     const { error } = await supabase.from("bot_accounts").insert({
       customer_id: customerId,
       nickname: nickname.trim(),
       bot_code: botCode.trim(),
       package: packageName,
-      started_at: startedAt.toISOString(),
-      expired_at: expiredAt.toISOString(),
+      started_at: new Date().toISOString(),
+      expired_at: new Date(`${expiredAt}T23:59:59`).toISOString(),
       status: "active",
     });
 
@@ -365,6 +350,16 @@ export default function BotAccountPage() {
 
                       <option value="Permanent">Permanent</option>
                     </select>
+                  </div>
+                  <div className="bot-input-group">
+                    <label>Tanggal Expired</label>
+
+                    <input
+                      type="date"
+                      value={expiredAt}
+                      onChange={(e) => setExpiredAt(e.target.value)}
+                      required
+                    />
                   </div>
                 </div>
 
