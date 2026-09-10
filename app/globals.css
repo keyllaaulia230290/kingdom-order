@@ -7042,3 +7042,283 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.coming-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(30, 110, 255, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(120, 60, 255, 0.18),
+      transparent 35%
+    ),
+    #050912;
+}
+
+.coming-card {
+  width: min(680px, 100%);
+  text-align: center;
+  padding: 48px 32px;
+
+  border: 1px solid rgba(120, 180, 255, 0.18);
+  border-radius: 32px;
+
+  background: rgba(10, 17, 31, 0.82);
+  backdrop-filter: blur(20px);
+
+  position: relative;
+  z-index: 2;
+}
+
+.coming-logo {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 28px;
+
+  border-radius: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(120, 190, 255, 0.35);
+
+  background: radial-gradient(
+    circle at 40% 30%,
+    rgba(70, 150, 255, 0.35),
+    rgba(15, 25, 50, 0.95)
+  );
+
+  box-shadow: 0 0 50px rgba(50, 130, 255, 0.18);
+}
+
+.coming-logo span {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: #9fb5d4;
+}
+
+.coming-logo strong {
+  font-size: 34px;
+  letter-spacing: 5px;
+  color: #b9dcff;
+  line-height: 1;
+}
+
+.coming-badge {
+  display: inline-block;
+
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: #8fc8ff;
+
+  background: rgba(60, 140, 255, 0.1);
+
+  border: 1px solid rgba(80, 160, 255, 0.2);
+
+  margin-bottom: 20px;
+}
+
+.coming-card h1 {
+  margin: 0;
+
+  font-size: clamp(36px, 7vw, 58px);
+  line-height: 1.05;
+  letter-spacing: -2px;
+
+  color: #f4f7ff;
+}
+
+.coming-card h1 span {
+  background: linear-gradient(90deg, #7fc8ff, #9b8cff);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+}
+
+.coming-description {
+  max-width: 520px;
+
+  margin: 22px auto 0;
+
+  color: #8291a9;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.coming-release {
+  margin-top: 36px;
+
+  padding: 24px;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.coming-release > span {
+  display: block;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: #71839d;
+
+  margin-bottom: 18px;
+}
+
+.countdown {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.count-box {
+  min-width: 82px;
+
+  padding: 14px 10px;
+
+  border-radius: 16px;
+
+  background: rgba(30, 45, 70, 0.65);
+
+  border: 1px solid rgba(120, 180, 255, 0.12);
+}
+
+.count-box strong {
+  display: block;
+
+  font-size: 32px;
+  line-height: 1;
+
+  color: #edf6ff;
+}
+
+.count-box small {
+  display: block;
+
+  margin-top: 8px;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+
+  color: #71839d;
+}
+
+.countdown i {
+  font-style: normal;
+
+  font-size: 24px;
+
+  color: #53647c;
+}
+
+.coming-release > p {
+  margin: 18px 0 0;
+
+  font-size: 12px;
+
+  color: #64758e;
+}
+
+.coming-footer {
+  margin-top: 32px;
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  font-size: 9px;
+
+  letter-spacing: 4px;
+
+  color: #4c5c73;
+}
+
+.coming-footer i {
+  font-style: normal;
+}
+
+.coming-glow {
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+
+  opacity: 0.15;
+}
+
+.coming-glow-one {
+  background: #1677ff;
+
+  top: -180px;
+  left: -180px;
+}
+
+.coming-glow-two {
+  background: #743cff;
+
+  right: -180px;
+  bottom: -180px;
+}
+
+@media (max-width: 520px) {
+  .coming-card {
+    padding: 36px 18px;
+    border-radius: 26px;
+  }
+
+  .countdown {
+    gap: 5px;
+  }
+
+  .count-box {
+    min-width: 62px;
+    padding: 12px 6px;
+  }
+
+  .count-box strong {
+    font-size: 24px;
+  }
+
+  .countdown i {
+    font-size: 18px;
+  }
+
+  .coming-description {
+    font-size: 14px;
+  }
+}
