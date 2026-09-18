@@ -220,7 +220,10 @@ export default function AdminPage() {
           </div>
 
           <div className="admin-menu-grid">
-            <a href="/admin/customer" className="admin-menu-item">
+            <a
+              href="/calonpengusahasuksessebelum20tahun/customer"
+              className="admin-menu-item"
+            >
               <span>👥</span>
 
               <strong>Customer</strong>
@@ -228,7 +231,10 @@ export default function AdminPage() {
               <small>Data customer & WhatsApp</small>
             </a>
 
-            <a href="/admin/bot-account" className="admin-menu-item">
+            <a
+              href="/calonpengusahasuksessebelum20tahun/bot-account"
+              className="admin-menu-item"
+            >
               <span>🤖</span>
 
               <strong>Bot Account</strong>
@@ -236,7 +242,10 @@ export default function AdminPage() {
               <small>Masa aktif & status bot</small>
             </a>
 
-            <a href="/admin/order" className="admin-menu-item">
+            <a
+              href="/calonpengusahasuksessebelum20tahun/order"
+              className="admin-menu-item"
+            >
               <span>🧾</span>
 
               <strong>Order</strong>
@@ -244,7 +253,10 @@ export default function AdminPage() {
               <small>Pesanan & pembayaran</small>
             </a>
 
-            <a href="/admin/history-order-key" className="admin-menu-item">
+            <a
+              href="/calonpengusahasuksessebelum20tahun/history-order-key"
+              className="admin-menu-item"
+            >
               <span>🔑</span>
 
               <strong>History Order Key</strong>
@@ -263,7 +275,10 @@ export default function AdminPage() {
               <h2>Order Terbaru</h2>
             </div>
 
-            <a href="/admin/order" className="admin-back">
+            <a
+              href="/calonpengusahasuksessebelum20tahun/order"
+              className="admin-back"
+            >
               LIHAT SEMUA
             </a>
           </div>
