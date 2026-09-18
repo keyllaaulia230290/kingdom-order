@@ -5,6 +5,7 @@ import { useState } from "react";
 
 type BotAccount = {
   id: string;
+  customer_id: string;
   nickname: string;
   bot_code: string;
   package: string;
@@ -14,7 +15,7 @@ type BotAccount = {
 };
 
 export default function CekMasaAktifPage() {
-  const [botCode, setBotCode] = useState("");
+  const [search, setSearch] = useState("");
   const [bot, setBot] = useState<BotAccount | null>(null);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
@@ -22,8 +23,8 @@ export default function CekMasaAktifPage() {
   async function checkBot(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!botCode.trim()) {
-      alert("Masukkan kode bot terlebih dahulu.");
+    if (!search.trim()) {
+      alert("Masukkan Nama Bot atau IGG ID terlebih dahulu.");
       return;
     }
 
@@ -31,12 +32,15 @@ export default function CekMasaAktifPage() {
     setSearched(true);
     setBot(null);
 
+    const keyword = search.trim();
+
+    // Cari berdasarkan Nama Bot ATAU IGG ID
     const { data, error } = await supabase
       .from("bot_accounts")
       .select(
-        "id, nickname, bot_code, package, started_at, expired_at, status",
+        "id, customer_id, nickname, bot_code, package, started_at, expired_at, status",
       )
-      .eq("bot_code", botCode.trim())
+      .or(`nickname.ilike.%${keyword}%,bot_code.eq.${keyword}`)
       .maybeSingle();
 
     if (error) {
@@ -102,12 +106,31 @@ export default function CekMasaAktifPage() {
     };
   }
 
+  function openWhatsApp() {
+    if (!bot) return;
+
+    const message = `Halo Admin AJRASTORE, saya ingin memperpanjang bot.
+
+Nama Bot: ${bot.nickname}
+IGG ID: ${bot.bot_code}
+
+Mohon informasi perpanjangannya.`;
+
+    const url = `https://wa.me/6285885385659?text=${encodeURIComponent(
+      message,
+    )}`;
+
+    window.open(url, "_blank");
+  }
+
   const status = getStatus();
   const daysLeft = bot ? getDaysLeft(bot.expired_at) : 0;
 
   return (
     <main className="admin-page">
       <div className="admin-container">
+        {/* HEADER */}
+
         <header className="admin-header">
           <div>
             <span className="admin-brand">AJRASTORE</span>
@@ -122,6 +145,8 @@ export default function CekMasaAktifPage() {
           </a>
         </header>
 
+        {/* CARD */}
+
         <section className="admin-card">
           <div className="admin-card-header">
             <div>
@@ -131,15 +156,17 @@ export default function CekMasaAktifPage() {
             </div>
           </div>
 
+          {/* SEARCH */}
+
           <form onSubmit={checkBot} className="bot-check-form">
             <div className="bot-input-group">
-              <label>KODE BOT</label>
+              <label>NAMA BOT / IGG ID</label>
 
               <input
                 type="text"
-                placeholder="Contoh: BOT-001"
-                value={botCode}
-                onChange={(e) => setBotCode(e.target.value)}
+                placeholder="Contoh: AJRA BOT 01 atau 123456789"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
 
@@ -152,6 +179,8 @@ export default function CekMasaAktifPage() {
             </button>
           </form>
 
+          {/* NOT FOUND */}
+
           {searched && !loading && !bot && (
             <div className="admin-empty">
               <span>🔎</span>
@@ -159,30 +188,46 @@ export default function CekMasaAktifPage() {
               <strong>Bot tidak ditemukan</strong>
 
               <p>
-                Pastikan kode bot yang kamu masukkan sudah benar.
+                Pastikan Nama Bot atau IGG ID yang kamu masukkan sudah benar.
               </p>
             </div>
           )}
 
+          {/* RESULT */}
+
           {bot && status && (
             <div className="bot-check-result">
+              {/* RESULT HEADER */}
+
               <div className="bot-result-header">
                 <div>
                   <span>BOT ACCOUNT</span>
 
                   <h2>{bot.nickname}</h2>
 
-                  <p>{bot.bot_code}</p>
+                  <p>IGG ID: {bot.bot_code}</p>
                 </div>
 
-                <span
-                  className={`customer-status ${status.className}`}
-                >
+                <span className={`customer-status ${status.className}`}>
                   {status.text}
                 </span>
               </div>
 
+              {/* DATA */}
+
               <div className="bot-result-grid">
+                <div>
+                  <small>NAMA BOT</small>
+
+                  <strong>{bot.nickname}</strong>
+                </div>
+
+                <div>
+                  <small>IGG ID</small>
+
+                  <strong>{bot.bot_code || "-"}</strong>
+                </div>
+
                 <div>
                   <small>PACKAGE</small>
 
@@ -208,6 +253,8 @@ export default function CekMasaAktifPage() {
                 </div>
               </div>
 
+              {/* DAYS */}
+
               <div className="bot-days-card">
                 <small>SISA MASA AKTIF</small>
 
@@ -218,18 +265,42 @@ export default function CekMasaAktifPage() {
                 </strong>
               </div>
 
+              {/* WARNING 3 DAYS */}
+
               {daysLeft > 0 && daysLeft <= 3 && (
                 <div className="bot-warning">
-                  ⚠️ Masa aktif bot kamu akan segera berakhir.
-                  Silakan lakukan perpanjangan.
+                  ⚠️ Masa aktif bot kamu akan segera berakhir. Silakan lakukan
+                  perpanjangan.
                 </div>
               )}
 
+              {/* EXPIRED */}
+
               {daysLeft <= 0 && (
-                <div className="bot-warning">
-                  ⚠️ Masa aktif bot ini sudah berakhir.
-                  Silakan lakukan perpanjangan untuk mengaktifkannya kembali.
-                </div>
+                <>
+                  <div className="bot-warning">
+                    ⚠️ Masa aktif bot ini sudah berakhir. Silakan lakukan
+                    perpanjangan untuk mengaktifkannya kembali.
+                  </div>
+
+                  {/* WHATSAPP */}
+
+                  <button
+                    type="button"
+                    onClick={openWhatsApp}
+                    className="bot-whatsapp-renew"
+                  >
+                    <span className="bot-whatsapp-icon">💬</span>
+
+                    <span className="bot-whatsapp-content">
+                      <strong>Perpanjang Bot</strong>
+
+                      <small>Hubungi Admin melalui WhatsApp</small>
+                    </span>
+
+                    <span className="bot-whatsapp-arrow">→</span>
+                  </button>
+                </>
               )}
             </div>
           )}

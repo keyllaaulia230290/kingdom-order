@@ -34,6 +34,8 @@ export default function BotAccountPage() {
   const [packageName, setPackageName] = useState("1 Bulan");
   const [expiredAt, setExpiredAt] = useState("");
 
+  const [editingBot, setEditingBot] = useState<BotAccount | null>(null);
+
   async function loadData() {
     setLoading(true);
 
@@ -78,9 +80,38 @@ export default function BotAccountPage() {
     setBotCode("");
     setPackageName("1 Bulan");
     setExpiredAt("");
+    setEditingBot(null);
   }
 
-  async function addBot(e: React.FormEvent<HTMLFormElement>) {
+  function openAddForm() {
+    resetForm();
+    setShowForm(true);
+  }
+
+  function openEditForm(bot: BotAccount) {
+    setEditingBot(bot);
+
+    setCustomerId(bot.customer_id);
+    setNickname(bot.nickname || "");
+    setBotCode(bot.bot_code || "");
+    setPackageName(bot.package || "1 Bulan");
+
+    if (bot.expired_at) {
+      const date = new Date(bot.expired_at);
+
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+
+      setExpiredAt(`${year}-${month}-${day}`);
+    } else {
+      setExpiredAt("");
+    }
+
+    setShowForm(true);
+  }
+
+  async function saveBot(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!customerId) {
@@ -89,12 +120,12 @@ export default function BotAccountPage() {
     }
 
     if (!nickname.trim()) {
-      alert("Nickname bot wajib diisi.");
+      alert("Nama bot wajib diisi.");
       return;
     }
 
     if (!botCode.trim()) {
-      alert("Bot code wajib diisi.");
+      alert("IGG ID wajib diisi.");
       return;
     }
 
@@ -105,13 +136,46 @@ export default function BotAccountPage() {
 
     setSaving(true);
 
+    const expiredDate = new Date(`${expiredAt}T23:59:59`).toISOString();
+
+    // EDIT BOT
+    if (editingBot) {
+      const { error } = await supabase
+        .from("bot_accounts")
+        .update({
+          customer_id: customerId,
+          nickname: nickname.trim(),
+          bot_code: botCode.trim(),
+          package: packageName,
+          expired_at: expiredDate,
+        })
+        .eq("id", editingBot.id);
+
+      if (error) {
+        console.error("EDIT BOT ERROR:", error);
+        alert(`Gagal mengedit bot: ${error.message}`);
+        setSaving(false);
+        return;
+      }
+
+      alert("Data bot berhasil diperbarui.");
+
+      resetForm();
+      setShowForm(false);
+      setSaving(false);
+
+      await loadData();
+      return;
+    }
+
+    // TAMBAH BOT
     const { error } = await supabase.from("bot_accounts").insert({
       customer_id: customerId,
       nickname: nickname.trim(),
       bot_code: botCode.trim(),
       package: packageName,
       started_at: new Date().toISOString(),
-      expired_at: new Date(`${expiredAt}T23:59:59`).toISOString(),
+      expired_at: expiredDate,
       status: "active",
     });
 
@@ -121,6 +185,8 @@ export default function BotAccountPage() {
       setSaving(false);
       return;
     }
+
+    alert("Bot berhasil ditambahkan.");
 
     resetForm();
     setShowForm(false);
@@ -187,6 +253,12 @@ export default function BotAccountPage() {
   }
 
   async function extendBot(bot: BotAccount) {
+    const confirmed = confirm(
+      `Perpanjang bot "${bot.nickname}" selama 30 hari?`,
+    );
+
+    if (!confirmed) return;
+
     const currentExpired = new Date(bot.expired_at);
     const now = new Date();
 
@@ -206,16 +278,18 @@ export default function BotAccountPage() {
 
     if (error) {
       console.error("EXTEND BOT ERROR:", error);
-      alert("Gagal memperpanjang bot.");
+      alert(`Gagal memperpanjang bot: ${error.message}`);
       return;
     }
+
+    alert("Bot berhasil diperpanjang 30 hari.");
 
     await loadData();
   }
 
   async function deleteBot(bot: BotAccount) {
     const confirmed = confirm(
-      `Hapus bot "${bot.nickname}"? Data bot akan dihapus permanen.`,
+      `Hapus bot "${bot.nickname}"?\n\nData bot akan dihapus permanen.`,
     );
 
     if (!confirmed) return;
@@ -227,9 +301,11 @@ export default function BotAccountPage() {
 
     if (error) {
       console.error("DELETE BOT ERROR:", error);
-      alert("Gagal menghapus bot.");
+      alert(`Gagal menghapus bot: ${error.message}`);
       return;
     }
+
+    alert("Bot berhasil dihapus.");
 
     await loadData();
   }
@@ -245,10 +321,10 @@ export default function BotAccountPage() {
 
             <h1>Bot Account</h1>
 
-            <p>Kelola akun bot, paket, status dan masa aktif.</p>
+            <p>Kelola bot, customer, IGG ID, paket dan masa aktif.</p>
           </div>
 
-          <a href="/admin" className="admin-back">
+          <a href="/calonpengusahasuksessebelum20tahun" className="admin-back">
             ← ADMIN
           </a>
         </header>
@@ -266,31 +342,36 @@ export default function BotAccountPage() {
             <button
               type="button"
               className="admin-primary-button"
-              onClick={() => {
-                resetForm();
-                setShowForm(true);
-              }}
+              onClick={openAddForm}
             >
               + TAMBAH BOT
             </button>
           </div>
 
-          {/* FORM TAMBAH BOT */}
+          {/* FORM */}
 
           {showForm && (
             <div className="bot-form-box">
               <div className="bot-form-title">
-                <span>🤖</span>
+                <span>{editingBot ? "✏️" : "🤖"}</span>
 
                 <div>
-                  <strong>Tambah Bot Account</strong>
+                  <strong>
+                    {editingBot ? "Edit Bot Account" : "Tambah Bot Account"}
+                  </strong>
 
-                  <small>Masukkan data bot baru.</small>
+                  <small>
+                    {editingBot
+                      ? "Perbarui data bot."
+                      : "Masukkan data bot baru."}
+                  </small>
                 </div>
               </div>
 
-              <form onSubmit={addBot}>
+              <form onSubmit={saveBot}>
                 <div className="bot-form-grid">
+                  {/* CUSTOMER */}
+
                   <div className="bot-input-group">
                     <label>Customer</label>
 
@@ -309,8 +390,10 @@ export default function BotAccountPage() {
                     </select>
                   </div>
 
+                  {/* NAMA BOT */}
+
                   <div className="bot-input-group">
-                    <label>Nickname Bot</label>
+                    <label>Nama Bot</label>
 
                     <input
                       type="text"
@@ -321,17 +404,21 @@ export default function BotAccountPage() {
                     />
                   </div>
 
+                  {/* IGG ID */}
+
                   <div className="bot-input-group">
-                    <label>Bot Code</label>
+                    <label>IGG ID</label>
 
                     <input
                       type="text"
-                      placeholder="Contoh: BOT-001"
+                      placeholder="Contoh: 123456789"
                       value={botCode}
                       onChange={(e) => setBotCode(e.target.value)}
                       required
                     />
                   </div>
+
+                  {/* PACKAGE */}
 
                   <div className="bot-input-group">
                     <label>Package</label>
@@ -351,6 +438,9 @@ export default function BotAccountPage() {
                       <option value="Permanent">Permanent</option>
                     </select>
                   </div>
+
+                  {/* EXPIRED */}
+
                   <div className="bot-input-group">
                     <label>Tanggal Expired</label>
 
@@ -362,6 +452,8 @@ export default function BotAccountPage() {
                     />
                   </div>
                 </div>
+
+                {/* ACTION */}
 
                 <div className="bot-form-actions">
                   <button
@@ -380,7 +472,11 @@ export default function BotAccountPage() {
                     className="admin-primary-button"
                     disabled={saving}
                   >
-                    {saving ? "MENYIMPAN..." : "✓ SIMPAN BOT"}
+                    {saving
+                      ? "MENYIMPAN..."
+                      : editingBot
+                        ? "✓ SIMPAN PERUBAHAN"
+                        : "✓ SIMPAN BOT"}
                   </button>
                 </div>
               </form>
@@ -411,6 +507,7 @@ export default function BotAccountPage() {
                 <thead>
                   <tr>
                     <th>BOT</th>
+                    <th>IGG ID</th>
                     <th>CUSTOMER</th>
                     <th>PACKAGE</th>
                     <th>STATUS</th>
@@ -428,21 +525,35 @@ export default function BotAccountPage() {
 
                     return (
                       <tr key={bot.id}>
+                        {/* BOT */}
+
                         <td>
                           <div className="bot-name-cell">
                             <strong>{bot.nickname}</strong>
 
-                            <small>{bot.bot_code}</small>
+                            <small>IGG ID: {bot.bot_code}</small>
                           </div>
                         </td>
 
+                        {/* IGG ID */}
+
+                        <td>
+                          <strong>{bot.bot_code || "-"}</strong>
+                        </td>
+
+                        {/* CUSTOMER */}
+
                         <td>{getCustomerName(bot.customer_id)}</td>
+
+                        {/* PACKAGE */}
 
                         <td>
                           <span className="package-badge">
                             {bot.package || "-"}
                           </span>
                         </td>
+
+                        {/* STATUS */}
 
                         <td>
                           <span
@@ -452,9 +563,15 @@ export default function BotAccountPage() {
                           </span>
                         </td>
 
+                        {/* MULAI */}
+
                         <td>{formatDate(bot.started_at)}</td>
 
+                        {/* EXPIRED */}
+
                         <td>{formatDate(bot.expired_at)}</td>
+
+                        {/* SISA */}
 
                         <td>
                           <strong
@@ -466,6 +583,8 @@ export default function BotAccountPage() {
                           </strong>
                         </td>
 
+                        {/* ACTION */}
+
                         <td>
                           <div className="bot-actions">
                             <button
@@ -474,6 +593,14 @@ export default function BotAccountPage() {
                               onClick={() => extendBot(bot)}
                             >
                               +30 HARI
+                            </button>
+
+                            <button
+                              type="button"
+                              className="admin-primary-button"
+                              onClick={() => openEditForm(bot)}
+                            >
+                              EDIT
                             </button>
 
                             <button

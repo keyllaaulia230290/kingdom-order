@@ -7322,3 +7322,140 @@ body {
     font-size: 14px;
   }
 }
+
+/* =========================================
+   WHATSAPP PERPANJANG BOT
+========================================= */
+
+.bot-whatsapp-renew {
+  width: 100%;
+  margin-top: 18px;
+  padding: 18px 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  border: 1px solid rgba(37, 211, 102, 0.25);
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(37, 211, 102, 0.12),
+    rgba(37, 211, 102, 0.04)
+  );
+
+  color: #ffffff;
+  cursor: pointer;
+
+  text-align: left;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.bot-whatsapp-renew:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(37, 211, 102, 0.55);
+
+  background: linear-gradient(
+    135deg,
+    rgba(37, 211, 102, 0.18),
+    rgba(37, 211, 102, 0.07)
+  );
+
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.12);
+}
+
+.bot-whatsapp-renew:active {
+  transform: translateY(0);
+}
+
+/* ICON */
+
+.bot-whatsapp-icon {
+  width: 46px;
+  height: 46px;
+
+  flex: 0 0 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: rgba(37, 211, 102, 0.15);
+
+  font-size: 23px;
+}
+
+/* CONTENT */
+
+.bot-whatsapp-content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  flex: 1;
+}
+
+.bot-whatsapp-content strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.bot-whatsapp-content small {
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ARROW */
+
+.bot-whatsapp-arrow {
+  font-size: 20px;
+  opacity: 0.65;
+
+  transition: transform 0.2s ease;
+}
+
+.bot-whatsapp-renew:hover .bot-whatsapp-arrow {
+  transform: translateX(4px);
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .bot-whatsapp-renew {
+    padding: 15px 16px;
+    border-radius: 14px;
+  }
+
+  .bot-whatsapp-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+    border-radius: 12px;
+    font-size: 20px;
+  }
+
+  .bot-whatsapp-content strong {
+    font-size: 14px;
+  }
+
+  .bot-whatsapp-content small {
+    font-size: 11px;
+  }
+
+  .bot-whatsapp-arrow {
+    font-size: 18px;
+  }
+}

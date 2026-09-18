@@ -292,7 +292,7 @@ export default function OrderPage() {
             <p>Kelola pesanan, pembayaran dan transaksi customer.</p>
           </div>
 
-          <a href="/admin" className="admin-back">
+          <a href="/calonpengusahasuksessebelum20tahun" className="admin-back">
             ← ADMIN
           </a>
         </header>

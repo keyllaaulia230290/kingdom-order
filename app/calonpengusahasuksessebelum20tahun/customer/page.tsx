@@ -187,7 +187,7 @@ export default function CustomerPage() {
             <p>Kelola data customer dan nomor WhatsApp.</p>
           </div>
 
-          <a href="/admin" className="admin-back">
+          <a href="/calonpengusahasuksessebelum20tahun" className="admin-back">
             ← ADMIN
           </a>
         </header>

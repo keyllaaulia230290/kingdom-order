@@ -182,7 +182,7 @@ export default function HistoryOrderKeyPage() {
             <p>Riwayat pemesanan key customer.</p>
           </div>
 
-          <a href="/admin" className="admin-back">
+          <a href="/calonpengusahasuksessebelum20tahun" className="admin-back">
             ← ADMIN
           </a>
         </header>
