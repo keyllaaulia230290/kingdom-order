@@ -25,6 +25,8 @@ export default function BotAccountPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [search, setSearch] = useState("");
+
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -254,17 +256,22 @@ export default function BotAccountPage() {
 
   async function extendBot(bot: BotAccount) {
     const confirmed = confirm(
-      `Perpanjang bot "${bot.nickname}" selama 30 hari?`,
+      `Perpanjang bot "${bot.nickname}" selama 30 hari dari tanggal expired saat ini?\n\nExpired sekarang: ${formatDate(
+        bot.expired_at,
+      )}`,
     );
 
     if (!confirmed) return;
 
+    // +30 HARI SELALU DIHITUNG DARI EXPIRED LAMA
     const currentExpired = new Date(bot.expired_at);
-    const now = new Date();
 
-    const baseDate = currentExpired > now ? currentExpired : now;
+    if (isNaN(currentExpired.getTime())) {
+      alert("Tanggal expired bot tidak valid.");
+      return;
+    }
 
-    const newExpired = new Date(baseDate);
+    const newExpired = new Date(currentExpired);
 
     newExpired.setDate(newExpired.getDate() + 30);
 
@@ -282,7 +289,11 @@ export default function BotAccountPage() {
       return;
     }
 
-    alert("Bot berhasil diperpanjang 30 hari.");
+    alert(
+      `Bot berhasil diperpanjang 30 hari.\n\nExpired baru: ${formatDate(
+        newExpired.toISOString(),
+      )}`,
+    );
 
     await loadData();
   }
@@ -309,6 +320,21 @@ export default function BotAccountPage() {
 
     await loadData();
   }
+
+  // SEARCH
+  const filteredBots = bots.filter((bot) => {
+    const keyword = search.trim().toLowerCase();
+
+    if (!keyword) return true;
+
+    const customerName = getCustomerName(bot.customer_id).toLowerCase();
+
+    return (
+      bot.nickname?.toLowerCase().includes(keyword) ||
+      bot.bot_code?.toLowerCase().includes(keyword) ||
+      customerName.includes(keyword)
+    );
+  });
 
   return (
     <main className="admin-page">
@@ -347,6 +373,29 @@ export default function BotAccountPage() {
               + TAMBAH BOT
             </button>
           </div>
+
+          {/* SEARCH */}
+
+          {!loading && bots.length > 0 && (
+            <div className="bot-search-box">
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="🔎 Cari Nama Bot, IGG ID, atau Customer..."
+              />
+
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch("")}
+                  className="bot-search-clear"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          )}
 
           {/* FORM */}
 
@@ -501,6 +550,17 @@ export default function BotAccountPage() {
 
               <p>Klik tombol + TAMBAH BOT untuk membuat bot.</p>
             </div>
+          ) : filteredBots.length === 0 ? (
+            <div className="admin-empty">
+              <span>🔎</span>
+
+              <strong>Bot tidak ditemukan</strong>
+
+              <p>
+                Tidak ada bot yang cocok dengan pencarian{" "}
+                <strong>"{search}"</strong>.
+              </p>
+            </div>
           ) : (
             <div className="customer-table-wrapper">
               <table className="customer-table bot-table">
@@ -519,14 +579,12 @@ export default function BotAccountPage() {
                 </thead>
 
                 <tbody>
-                  {bots.map((bot) => {
+                  {filteredBots.map((bot) => {
                     const status = getStatus(bot);
                     const daysLeft = getDaysLeft(bot.expired_at);
 
                     return (
                       <tr key={bot.id}>
-                        {/* BOT */}
-
                         <td>
                           <div className="bot-name-cell">
                             <strong>{bot.nickname}</strong>
@@ -535,25 +593,17 @@ export default function BotAccountPage() {
                           </div>
                         </td>
 
-                        {/* IGG ID */}
-
                         <td>
                           <strong>{bot.bot_code || "-"}</strong>
                         </td>
 
-                        {/* CUSTOMER */}
-
                         <td>{getCustomerName(bot.customer_id)}</td>
-
-                        {/* PACKAGE */}
 
                         <td>
                           <span className="package-badge">
                             {bot.package || "-"}
                           </span>
                         </td>
-
-                        {/* STATUS */}
 
                         <td>
                           <span
@@ -563,15 +613,9 @@ export default function BotAccountPage() {
                           </span>
                         </td>
 
-                        {/* MULAI */}
-
                         <td>{formatDate(bot.started_at)}</td>
 
-                        {/* EXPIRED */}
-
                         <td>{formatDate(bot.expired_at)}</td>
-
-                        {/* SISA */}
 
                         <td>
                           <strong
@@ -582,8 +626,6 @@ export default function BotAccountPage() {
                             {daysLeft <= 0 ? "Expired" : `${daysLeft} hari`}
                           </strong>
                         </td>
-
-                        {/* ACTION */}
 
                         <td>
                           <div className="bot-actions">
