@@ -26,6 +26,7 @@ export default function BotAccountPage() {
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -263,7 +264,7 @@ export default function BotAccountPage() {
 
     if (!confirmed) return;
 
-    // +30 HARI SELALU DIHITUNG DARI EXPIRED LAMA
+    // SELALU HITUNG DARI EXPIRED LAMA
     const currentExpired = new Date(bot.expired_at);
 
     if (isNaN(currentExpired.getTime())) {
@@ -321,19 +322,39 @@ export default function BotAccountPage() {
     await loadData();
   }
 
-  // SEARCH
+  // SEARCH + FILTER
   const filteredBots = bots.filter((bot) => {
     const keyword = search.trim().toLowerCase();
 
-    if (!keyword) return true;
-
     const customerName = getCustomerName(bot.customer_id).toLowerCase();
 
-    return (
+    const matchesSearch =
+      !keyword ||
       bot.nickname?.toLowerCase().includes(keyword) ||
       bot.bot_code?.toLowerCase().includes(keyword) ||
-      customerName.includes(keyword)
-    );
+      customerName.includes(keyword);
+
+    const daysLeft = getDaysLeft(bot.expired_at);
+
+    let matchesStatus = true;
+
+    if (statusFilter === "active") {
+      matchesStatus = daysLeft > 3 && bot.status !== "suspended";
+    }
+
+    if (statusFilter === "warning") {
+      matchesStatus = daysLeft > 0 && daysLeft <= 3;
+    }
+
+    if (statusFilter === "expired") {
+      matchesStatus = daysLeft <= 0;
+    }
+
+    if (statusFilter === "suspended") {
+      matchesStatus = bot.status === "suspended";
+    }
+
+    return matchesSearch && matchesStatus;
   });
 
   return (
@@ -374,26 +395,41 @@ export default function BotAccountPage() {
             </button>
           </div>
 
-          {/* SEARCH */}
+          {/* SEARCH + FILTER */}
 
           {!loading && bots.length > 0 && (
-            <div className="bot-search-box">
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="🔎 Cari Nama Bot, IGG ID, atau Customer..."
-              />
+            <div className="bot-search-filter">
+              <div className="bot-search-box">
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="🔎 Cari Nama Bot, IGG ID, atau Customer..."
+                />
 
-              {search && (
-                <button
-                  type="button"
-                  onClick={() => setSearch("")}
-                  className="bot-search-clear"
+                {search && (
+                  <button
+                    type="button"
+                    onClick={() => setSearch("")}
+                    className="bot-search-clear"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              <div className="bot-filter-box">
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
                 >
-                  ✕
-                </button>
-              )}
+                  <option value="all">Semua Bot</option>
+                  <option value="active">🟢 Aktif</option>
+                  <option value="warning">🟠 H-3 / Warning</option>
+                  <option value="expired">🔴 Expired</option>
+                  <option value="suspended">🟡 Suspend</option>
+                </select>
+              </div>
             </div>
           )}
 
@@ -477,13 +513,9 @@ export default function BotAccountPage() {
                       onChange={(e) => setPackageName(e.target.value)}
                     >
                       <option value="1 Bulan">1 Bulan</option>
-
                       <option value="3 Bulan">3 Bulan</option>
-
                       <option value="6 Bulan">6 Bulan</option>
-
                       <option value="1 Tahun">1 Tahun</option>
-
                       <option value="Permanent">Permanent</option>
                     </select>
                   </div>
@@ -557,8 +589,7 @@ export default function BotAccountPage() {
               <strong>Bot tidak ditemukan</strong>
 
               <p>
-                Tidak ada bot yang cocok dengan pencarian{" "}
-                <strong>"{search}"</strong>.
+                Tidak ada bot yang cocok dengan pencarian atau filter saat ini.
               </p>
             </div>
           ) : (
@@ -585,6 +616,8 @@ export default function BotAccountPage() {
 
                     return (
                       <tr key={bot.id}>
+                        {/* BOT */}
+
                         <td>
                           <div className="bot-name-cell">
                             <strong>{bot.nickname}</strong>
@@ -593,17 +626,25 @@ export default function BotAccountPage() {
                           </div>
                         </td>
 
+                        {/* IGG ID */}
+
                         <td>
                           <strong>{bot.bot_code || "-"}</strong>
                         </td>
 
+                        {/* CUSTOMER */}
+
                         <td>{getCustomerName(bot.customer_id)}</td>
+
+                        {/* PACKAGE */}
 
                         <td>
                           <span className="package-badge">
                             {bot.package || "-"}
                           </span>
                         </td>
+
+                        {/* STATUS */}
 
                         <td>
                           <span
@@ -613,9 +654,15 @@ export default function BotAccountPage() {
                           </span>
                         </td>
 
+                        {/* MULAI */}
+
                         <td>{formatDate(bot.started_at)}</td>
 
+                        {/* EXPIRED */}
+
                         <td>{formatDate(bot.expired_at)}</td>
+
+                        {/* SISA */}
 
                         <td>
                           <strong
@@ -626,6 +673,8 @@ export default function BotAccountPage() {
                             {daysLeft <= 0 ? "Expired" : `${daysLeft} hari`}
                           </strong>
                         </td>
+
+                        {/* ACTION */}
 
                         <td>
                           <div className="bot-actions">
