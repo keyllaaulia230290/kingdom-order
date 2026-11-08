@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 
 const packages = {
-  "1 Bulan": 10000,
-  "3 Bulan": 30000,
-  "6 Bulan": 60000,
-  "1 Tahun": 120000,
-  Permanent: 250000,
+  "1 Bulan": 25000,
+  "3 Bulan": 75000,
+  "6 Bulan": 135000,
+  "1 Tahun": 200000,
+  Permanent: 400000,
 };
 
 type PackageName = keyof typeof packages;
@@ -79,7 +79,11 @@ export default function Pembayaran() {
     const saved = sessionStorage.getItem("ajra_bot_data");
 
     if (saved) {
-      setBotData(JSON.parse(saved));
+      const parsed = JSON.parse(saved);
+      setBotData(parsed);
+      if (parsed.selectedPackage && parsed.selectedPackage in packages) {
+        setSelectedPackage(parsed.selectedPackage as PackageName);
+      }
     }
   }, []);
 

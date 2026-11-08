@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oxanium:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap");
 @import "tailwindcss";
 
 * {
@@ -7458,4 +7460,929 @@ body {
   .bot-whatsapp-arrow {
     font-size: 18px;
   }
+}
+
+
+/* =========================================================
+   AJRASTORE LANDING PAGE — refreshed gaming storefront
+========================================================= */
+.ajra-landing {
+  --ice: #a9edff;
+  --cyan: #35d9f5;
+  --blue: #168bdf;
+  --deep: #03132f;
+  --ink: #06142c;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100vh;
+  color: #f3fbff;
+  background: #04152f;
+  font-family: var(--font-geist-sans), "Arial", sans-serif;
+}
+.ajra-landing * { box-sizing: border-box; }
+.landing-backdrop {
+  position: absolute; inset: 0; z-index: -3;
+  background:
+    linear-gradient(180deg, rgba(2,17,43,.76), rgba(3,19,48,.92) 48%, #03142e 100%),
+    url("/art-background.jpg") center 12% / cover no-repeat;
+  transform: scale(1.025);
+}
+.ajra-landing::before {
+  content:""; position:absolute; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(ellipse at 75% 14%, rgba(31,193,255,.23), transparent 35%),
+    radial-gradient(ellipse at 8% 48%, rgba(22,115,230,.22), transparent 36%),
+    linear-gradient(90deg, rgba(2,14,35,.3), transparent 50%, rgba(3,13,34,.28));
+}
+.snow-layer { position:absolute; inset:0; z-index:5; pointer-events:none; overflow:hidden; }
+.snow-particle {
+  position:absolute; top:-14px; border-radius:50%;
+  background:rgba(213,249,255,.88);
+  box-shadow:0 0 9px rgba(113,224,255,.85), 0 0 18px rgba(105,193,255,.35);
+  animation:snowfall linear infinite;
+}
+@keyframes snowfall { 0%{transform:translate3d(0,-3vh,0);opacity:0} 10%{opacity:.9} 90%{opacity:.7} 100%{transform:translate3d(42px,110vh,0);opacity:0} }
+.ajra-header {
+  width:min(1240px, calc(100% - 64px)); margin:auto; min-height:94px;
+  display:flex; align-items:center; justify-content:space-between; gap:28px;
+  border-bottom:1px solid rgba(174,235,255,.13); position:relative; z-index:20;
+}
+.ajra-brand { display:flex; align-items:center; gap:13px; text-decoration:none; color:#fff; }
+.ajra-brand img { width:56px;height:56px;object-fit:cover;border-radius:13px;border:1px solid rgba(135,230,255,.45); }
+.ajra-brand span,.ajra-brand strong,.ajra-brand small {display:block}
+.ajra-brand strong {font-size:20px;font-weight:1000;letter-spacing:2px;font-style:italic;text-shadow:0 2px 16px #2bcbff66}
+.ajra-brand small {margin-top:4px;color:#8bdff5;font-size:9px;letter-spacing:2.3px;font-weight:800}
+.ajra-nav {display:flex;align-items:center;gap:34px}
+.ajra-nav a {color:#c9e8f7;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:1px;transition:.2s}
+.ajra-nav a:hover {color:#54e2ff}
+.ajra-nav .nav-cta {padding:13px 19px;border-radius:8px;color:#03172d;background:linear-gradient(110deg,#a8f2ff,#36c8f3);box-shadow:0 8px 28px #16bfe544}
+.nav-cta span {margin-left:9px}
+.mobile-menu-button {display:none}
+.ajra-hero {
+  width:min(1240px,calc(100% - 64px)); min-height:650px; margin:auto;
+  display:grid;grid-template-columns:1.02fr .98fr;align-items:center;position:relative;
+  padding:66px 0 86px;
+}
+.hero-copy {position:relative;z-index:3;padding:30px 0}
+.hero-kicker,.section-kicker {display:inline-flex;align-items:center;gap:10px;color:#72e6ff;font-size:10px;font-weight:900;letter-spacing:3px}
+.hero-kicker i {width:7px;height:7px;border-radius:50%;background:#4ce5ff;box-shadow:0 0 14px #4ce5ff}
+.hero-copy h1,.section-heading h2,.stock-copy h2,.owner-copy h2,.closing-cta h2 {
+  margin:23px 0 18px;font-size:clamp(43px,6vw,78px);line-height:.99;letter-spacing:-3px;
+  font-weight:1000;font-style:italic;text-transform:uppercase;
+  text-shadow:0 8px 36px rgba(0,0,0,.24);
+}
+.hero-copy h1 em,.section-heading h2 em,.stock-copy h2 em,.owner-copy h2 em,.closing-cta h2 em {
+  font-style:italic;color:transparent;background:linear-gradient(100deg,#f6fdff 0%,#79eaff 48%,#27a9f4 100%);
+  -webkit-background-clip:text;background-clip:text;
+}
+.hero-copy p,.stock-copy p,.owner-copy p,.section-heading>p {
+  max-width:510px;color:#b3cde0;font-size:15px;line-height:1.85;
+}
+.hero-actions {display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-top:30px}
+.primary-cta,.secondary-cta {
+  display:inline-flex;align-items:center;justify-content:center;gap:24px;min-height:52px;padding:0 22px;
+  border-radius:8px;text-decoration:none;font-size:11px;font-weight:1000;letter-spacing:1.3px;transition:.22s;
+}
+.primary-cta {color:#03172d;background:linear-gradient(110deg,#c5f8ff,#36c7f3);box-shadow:0 12px 35px #1bbfe43b}
+.primary-cta:hover {transform:translateY(-3px);box-shadow:0 16px 42px #1bbfe466}
+.secondary-cta {border:1px solid #7edfff55;color:#d8f5ff;background:#061b3b88}
+.secondary-cta:hover {border-color:#61e3ff;color:#fff}
+.hero-proof {display:flex;gap:24px;flex-wrap:wrap;margin-top:42px;color:#7fa9c3;font-size:9px;font-weight:900;letter-spacing:1.5px}
+.hero-proof b {color:#58e3ff;margin-right:7px}
+.hero-art-wrap {position:relative;min-height:510px;display:grid;place-items:center}
+.hero-art {position:relative;z-index:2;width:min(100%,530px);height:auto;object-fit:contain;filter:drop-shadow(0 24px 48px #0009);border-radius:50%;mask-image:radial-gradient(ellipse,#000 56%,transparent 76%)}
+.hero-glow {position:absolute;width:75%;aspect-ratio:1;border-radius:50%;background:#12a9ff3b;filter:blur(75px)}
+.hero-orbit {position:absolute;border:1px solid #8cecff2b;border-radius:50%;transform:rotate(-22deg)}
+.orbit-a {width:95%;height:62%}.orbit-b {width:78%;height:85%;transform:rotate(36deg)}
+.hero-sticker {position:absolute;right:2%;bottom:13%;z-index:4;width:105px;height:105px;border-radius:50%;display:grid;align-content:center;text-align:center;background:linear-gradient(145deg,#b9f7ff,#168ac9);color:#03213b;box-shadow:0 12px 35px #0007;transform:rotate(9deg)}
+.hero-sticker span {font-size:12px;font-weight:900;letter-spacing:3px}.hero-sticker strong{font-size:22px;font-weight:1000;font-style:italic}.hero-sticker small{font-size:7px;font-weight:900;letter-spacing:1.5px}
+.hero-floating-chip {position:absolute;left:0;bottom:13%;z-index:4;padding:12px 16px;border:1px solid #8cecff4a;border-radius:8px;background:#061b3bd9;backdrop-filter:blur(12px);color:#a9f1ff;font-size:9px;font-weight:900;letter-spacing:1.5px}
+.hero-bottom-label {position:absolute;bottom:24px;left:0;display:flex;align-items:center;gap:13px;color:#6e9db9;font-size:9px;font-weight:900;letter-spacing:2px}
+.hero-bottom-label span {color:#a8eaff}.hero-bottom-label i{width:42px;height:1px;background:#55dfff}
+.section-shell {width:min(1160px,calc(100% - 64px));margin:0 auto}
+.service-section {padding:110px 0 105px}
+.section-heading {display:flex;align-items:end;justify-content:space-between;gap:35px;margin-bottom:40px}
+.section-heading h2,.stock-copy h2,.owner-copy h2,.closing-cta h2 {font-size:clamp(34px,4vw,54px);letter-spacing:-1.8px;margin:15px 0 0}
+.section-heading>p {max-width:340px;margin:0 0 4px;font-size:13px}
+.service-grid {display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.service-card {overflow:hidden;text-decoration:none;color:#fff;border:1px solid #8bdfff2b;border-radius:15px;background:linear-gradient(150deg,#0a2c50e8,#06162feF);box-shadow:0 18px 50px #0004;transition:transform .28s,border-color .28s}
+.service-card:hover {transform:translateY(-8px);border-color:#64e5ff99}
+.service-image-wrap {height:245px;position:relative;overflow:hidden;background:#08264a}
+.service-image-wrap::after {content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 48%,#03152be8)}
+.service-image-wrap img {object-fit:cover;transition:transform .6s}
+.service-card:hover .service-image-wrap img {transform:scale(1.07)}
+.service-tag,.service-number {position:absolute;z-index:2;top:14px;padding:7px 9px;border-radius:5px;background:#06274acc;border:1px solid #a2ecff55;color:#c6f6ff;font-size:8px;font-weight:900;letter-spacing:1.5px}
+.service-tag{left:14px}.service-number{right:14px}
+.service-content {padding:21px 22px 24px}
+.service-content h3 {font-size:18px;font-weight:1000;font-style:italic;letter-spacing:1px;margin:0 0 9px}
+.service-content p {min-height:66px;color:#9cb8ce;font-size:12px;line-height:1.7;margin:0}
+.service-action {display:flex;justify-content:space-between;align-items:center;margin-top:19px;padding-top:15px;border-top:1px solid #9deaff20;color:#6de5ff;font-size:9px;font-weight:1000;letter-spacing:1.6px}
+.service-action b {font-size:18px}
+.stock-section {display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;padding:55px 0 120px}
+.stock-art {height:400px;position:relative;overflow:hidden;border-radius:18px;border:1px solid #8ceaff4a;box-shadow:0 25px 70px #0006}
+.stock-art img {object-fit:cover}
+.stock-art-shade {position:absolute;inset:0;background:linear-gradient(90deg,#03152b55,transparent 70%),linear-gradient(0deg,#03152bb8,transparent 65%)}
+.stock-stamp {position:absolute;left:23px;bottom:22px;color:#d7faff;font-size:10px;line-height:1.6;font-weight:1000;letter-spacing:2px}
+.stock-copy h2 {margin-bottom:18px}
+.stock-copy p {margin:0 0 25px;font-size:14px}
+.benefit-section {padding:90px 0 120px;border-top:1px solid #8ceaff1b}
+.centered-heading {display:block;text-align:center;max-width:760px;margin:0 auto 45px}
+.centered-heading>p {margin:17px auto 0;font-size:13px}
+.benefit-grid {display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.benefit-card {position:relative;padding:25px 22px 27px;min-height:205px;border:1px solid #8ceaff25;border-radius:13px;background:linear-gradient(145deg,#0a2c50c9,#06162fc9)}
+.benefit-icon {font-size:27px;margin-bottom:23px}.benefit-card>span{position:absolute;right:20px;top:24px;color:#5f8da9;font-size:10px;font-weight:900}
+.benefit-card h3 {font-size:15px;font-weight:1000;margin:0 0 9px;color:#e8faff}
+.benefit-card p {font-size:11px;line-height:1.7;color:#91aec4;margin:0}
+.owner-section {display:grid;grid-template-columns:.82fr 1.18fr;gap:75px;align-items:center;padding:15px 0 120px}
+.owner-photo-wrap {height:440px;max-width:390px;position:relative;border-radius:17px;overflow:hidden;border:1px solid #9ceaff4c;box-shadow:0 24px 70px #0008}
+.owner-photo-wrap img {object-fit:cover;object-position:center 24%}
+.owner-photo-caption {position:absolute;left:0;right:0;bottom:0;padding:38px 22px 20px;background:linear-gradient(transparent,#03152bed);display:flex;flex-direction:column;gap:5px}
+.owner-photo-caption span {font-size:8px;color:#8beaff;font-weight:900;letter-spacing:2px}.owner-photo-caption strong{font-size:19px;font-style:italic;letter-spacing:2px}
+.owner-copy p {max-width:520px;margin:20px 0 28px}
+.owner-signature {display:flex;flex-direction:column;gap:5px;padding-left:16px;border-left:2px solid #48d9fa}
+.owner-signature span {font-size:8px;color:#7db6d1;letter-spacing:2px;font-weight:900}.owner-signature strong{font-size:17px;font-style:italic;letter-spacing:2px}
+.closing-cta {display:flex;align-items:center;justify-content:space-between;gap:25px;padding:42px 45px;margin-bottom:70px;border:1px solid #80e7ff55;border-radius:16px;background:radial-gradient(ellipse at 85% 20%,#1c9edc55,transparent 45%),linear-gradient(110deg,#0a3157,#061a39);box-shadow:0 25px 70px #0005}
+.closing-cta h2 {font-size:clamp(30px,4vw,46px)}
+.ajra-footer {width:min(1240px,calc(100% - 64px));margin:0 auto;padding:25px 0 32px;border-top:1px solid #8ceaff22;display:flex;align-items:center;justify-content:space-between;gap:20px;color:#7199b5;font-size:8px;font-weight:800;letter-spacing:1.4px}
+.footer-brand {display:flex;align-items:center;gap:10px;color:#e9faff;text-decoration:none;font-size:13px;font-style:italic;letter-spacing:1.5px}
+.footer-brand img {border-radius:9px;object-fit:cover}
+.ajra-footer>a:last-child {color:#80eaff;text-decoration:none}
+.floating-cs {position:fixed;right:25px;bottom:18px;z-index:50;width:122px;height:145px;display:flex;align-items:end;justify-content:center;text-decoration:none;filter:drop-shadow(0 8px 20px #0008)}
+.floating-cs>img {position:relative;z-index:2;width:118px;height:118px;object-fit:cover;border-radius:50%;border:2px solid #77eaff;box-shadow:0 0 0 5px #56dfff20,0 0 32px #22bfff75}
+.cs-glow {position:absolute;width:100px;height:100px;bottom:7px;border-radius:50%;background:#16baff77;filter:blur(32px)}
+.cs-bubble {position:absolute;right:4px;top:0;z-index:4;white-space:nowrap;padding:10px 13px;border-radius:13px 13px 2px 13px;background:#e8fbff;color:#073052;font-size:10px;font-weight:1000;box-shadow:0 5px 20px #0006;animation:bubble-pop .4s ease}
+.cs-online {position:absolute;z-index:5;right:0;bottom:0;padding:5px 8px;border-radius:20px;background:#062d4c;border:1px solid #6be9ff66;color:#9cf4ff;font-size:7px;font-weight:900;letter-spacing:1px}
+.cs-online i {display:inline-block;width:5px;height:5px;margin-right:4px;border-radius:50%;background:#55f0a1;box-shadow:0 0 7px #55f0a1}
+@keyframes bubble-pop {from{opacity:0;transform:translateY(7px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:850px) {
+ .ajra-header,.ajra-hero,.section-shell,.ajra-footer{width:calc(100% - 40px)}
+ .ajra-nav{gap:17px}.ajra-nav a{font-size:10px}
+ .ajra-hero{min-height:580px;grid-template-columns:1fr .9fr}
+ .hero-copy h1{font-size:clamp(42px,7vw,60px)}
+ .hero-art-wrap{min-height:420px}
+ .service-image-wrap{height:205px}
+ .stock-section,.owner-section{gap:35px}
+ .benefit-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px) {
+ .ajra-header{width:calc(100% - 32px);min-height:78px}
+ .ajra-brand img{width:46px;height:46px}.ajra-brand strong{font-size:17px}
+ .mobile-menu-button{display:flex;flex-direction:column;gap:5px;padding:10px;border:1px solid #8ceaff44;border-radius:8px;background:#082344;color:white}
+ .mobile-menu-button span{width:20px;height:2px;background:#c8f5ff}
+ .ajra-nav{display:none;position:absolute;top:70px;left:0;right:0;padding:18px;border:1px solid #8ceaff35;border-radius:12px;background:#041a38f5;backdrop-filter:blur(18px);flex-direction:column;align-items:stretch;gap:18px}
+ .ajra-nav.nav-open{display:flex}.ajra-nav a{font-size:12px;padding:5px}
+ .ajra-nav .nav-cta{text-align:center}
+ .ajra-hero{width:calc(100% - 36px);display:flex;flex-direction:column;align-items:stretch;padding:62px 0 70px;min-height:auto}
+ .hero-copy{padding:0}.hero-copy h1{font-size:clamp(43px,12vw,65px);letter-spacing:-2px;margin-top:20px}
+ .hero-copy p{font-size:13px;line-height:1.8}
+ .hero-actions{gap:9px}.primary-cta,.secondary-cta{min-height:48px;padding:0 15px;font-size:9px;gap:12px}
+ .hero-proof{gap:13px;margin-top:26px;font-size:8px}
+ .hero-art-wrap{min-height:340px;margin-top:18px}
+ .hero-art{width:min(100%,390px)}.hero-floating-chip{left:0;bottom:7%;font-size:7px}.hero-sticker{right:3%;bottom:8%;width:82px;height:82px}
+ .hero-sticker strong{font-size:17px}.hero-bottom-label{bottom:12px;font-size:7px}
+ .section-shell{width:calc(100% - 36px)}
+ .service-section{padding:75px 0 70px}
+ .section-heading{display:block;margin-bottom:27px}
+ .section-heading h2,.stock-copy h2,.owner-copy h2{font-size:35px;letter-spacing:-1.2px}
+ .section-heading>p{margin-top:15px;font-size:12px}
+ .service-grid{grid-template-columns:1fr;gap:15px}
+ .service-image-wrap{height:240px}
+ .service-content p{min-height:0}
+ .stock-section{grid-template-columns:1fr;gap:28px;padding:25px 0 80px}
+ .stock-art{height:290px;order:2}.stock-copy{order:1}
+ .benefit-section{padding:70px 0 80px}
+ .centered-heading{margin-bottom:28px}
+ .centered-heading h2{font-size:31px}
+ .benefit-grid{gap:10px}
+ .benefit-card{padding:18px 15px;min-height:190px}
+ .benefit-card h3{font-size:13px}.benefit-card p{font-size:10px}
+ .owner-section{grid-template-columns:1fr;gap:28px;padding:0 0 75px}
+ .owner-photo-wrap{height:390px;max-width:100%;width:100%}
+ .closing-cta{width:calc(100% - 36px);padding:27px 22px;display:block;margin-bottom:45px}
+ .closing-cta h2{font-size:35px}.closing-cta .primary-cta{margin-top:22px}
+ .ajra-footer{width:calc(100% - 36px);flex-direction:column;align-items:flex-start;gap:13px;padding-bottom:95px;font-size:7px}
+ .floating-cs{right:10px;bottom:10px;width:96px;height:118px}
+ .floating-cs>img{width:91px;height:91px}
+ .cs-bubble{right:0;font-size:8px;padding:8px 10px}
+ .cs-online{font-size:6px}
+}
+@media(prefers-reduced-motion:reduce) {
+ .snow-particle{animation:none;display:none}
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important}
+}
+
+.ajra-footer { margin-top: 0; }
+
+/* =========================================================
+   AJRASTORE VISUAL REVISION — cinematic commander / ice storm
+   Decorative layer only: no route, data, payment or API changes.
+========================================================= */
+.ajra-landing {
+  --ice: #d8faff;
+  --cyan: #38e4ff;
+  --blue: #168dff;
+  --deep: #03102b;
+  background: #03112c;
+  font-family: var(--font-geist-sans), "Arial Narrow", sans-serif;
+}
+
+/* Turn the supplied Lords Mobile commander artwork into a cool,
+   atmospheric full-page backdrop instead of a flat blue gradient. */
+.landing-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background-image:
+    linear-gradient(180deg, rgba(1, 13, 39, .64), rgba(2, 20, 53, .78) 38%, rgba(1, 12, 34, .94) 100%),
+    url("/art-background.jpg");
+  background-position: center 10%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: hue-rotate(155deg) saturate(1.22) contrast(1.08);
+  transform: scale(1.035);
+}
+
+.ajra-landing::before {
+  background:
+    radial-gradient(ellipse at 76% 10%, rgba(35, 211, 255, .31), transparent 34%),
+    radial-gradient(ellipse at 8% 48%, rgba(30, 112, 255, .28), transparent 38%),
+    radial-gradient(ellipse at 55% 82%, rgba(105, 75, 255, .17), transparent 42%),
+    linear-gradient(90deg, rgba(1, 11, 32, .48), rgba(3, 19, 49, .12) 50%, rgba(1, 10, 31, .48));
+}
+
+/* More visible, continuous snow over the complete landing page. */
+.snow-layer { position: absolute; inset: 0; z-index: 30; pointer-events: none; overflow: hidden; }
+.snow-particle {
+  top: -18px;
+  background: radial-gradient(circle at 35% 30%, #fff 0 24%, #c9f6ff 50%, #70dfff 100%);
+  box-shadow: 0 0 7px rgba(198, 247, 255, .95), 0 0 19px rgba(75, 195, 255, .58);
+  animation-name: ajra-snowfall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes ajra-snowfall {
+  0% { transform: translate3d(0, -4vh, 0) rotate(0deg); opacity: 0; }
+  8% { opacity: .95; }
+  48% { transform: translate3d(32px, 52vh, 0) rotate(160deg); }
+  92% { opacity: .8; }
+  100% { transform: translate3d(-26px, 108vh, 0) rotate(360deg); opacity: 0; }
+}
+
+/* Stronger display typography and kinetic accent treatment. */
+.ajra-landing h1,
+.ajra-landing h2,
+.ajra-landing h3,
+.ajra-landing .primary-cta,
+.ajra-landing .secondary-cta,
+.ajra-landing .service-action,
+.ajra-landing .ajra-brand strong {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", var(--font-geist-sans), sans-serif;
+  font-weight: 900;
+  letter-spacing: .015em;
+}
+.hero-copy h1 {
+  text-shadow: 0 3px 0 rgba(8, 72, 135, .75), 0 10px 32px rgba(0, 0, 0, .48), 0 0 30px rgba(45, 208, 255, .24);
+  animation: hero-title-arrive .9s cubic-bezier(.2,.8,.2,1) both;
+}
+.hero-copy h1 em { filter: drop-shadow(0 0 16px rgba(51, 208, 255, .34)); }
+@keyframes hero-title-arrive {
+  from { opacity: 0; transform: translateY(22px) skewY(2deg); filter: blur(8px); }
+  to { opacity: 1; transform: translateY(0) skewY(0); filter: blur(0); }
+}
+.hero-art { animation: commander-hover 7s ease-in-out infinite; filter: drop-shadow(0 26px 46px rgba(0,0,0,.62)) saturate(1.12) hue-rotate(5deg); }
+@keyframes commander-hover { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-13px) rotate(1deg); } }
+.hero-glow { animation: hero-glow-pulse 5s ease-in-out infinite; }
+@keyframes hero-glow-pulse { 0%,100% { opacity: .55; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.08); } }
+.hero-orbit { animation: orbit-drift 24s linear infinite; }
+.orbit-b { animation-direction: reverse; }
+@keyframes orbit-drift { to { rotate: 360deg; } }
+.service-card, .benefit-card, .stock-art, .owner-photo-wrap { backdrop-filter: blur(10px); }
+.service-card { box-shadow: 0 20px 55px rgba(0,0,0,.48), 0 0 0 1px rgba(108,225,255,.08), inset 0 1px rgba(255,255,255,.14); }
+.service-card:hover { box-shadow: 0 24px 62px rgba(0,0,0,.5), 0 0 28px rgba(54,211,255,.2); }
+.service-image-wrap img { filter: saturate(1.1) contrast(1.04); }
+.benefit-card { transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease; }
+.benefit-card:hover { transform: translateY(-7px); border-color: rgba(99,226,255,.72); box-shadow: 0 14px 35px rgba(18,161,255,.16); }
+.primary-cta { position: relative; overflow: hidden; }
+.primary-cta::after { content: ""; position: absolute; inset: -40% auto -40% -35%; width: 28%; transform: skewX(-22deg); background: rgba(255,255,255,.48); filter: blur(9px); animation: button-shine 4.5s ease-in-out infinite; }
+@keyframes button-shine { 0%,55% { left: -40%; } 85%,100% { left: 130%; } }
+
+/* Customer support is deliberately a large character mascot, not a WhatsApp logo.
+   The headset and boom mic are drawn in CSS over the supplied fantasy character. */
+.floating-cs {
+  right: 24px;
+  bottom: 18px;
+  width: 218px;
+  height: 238px;
+  align-items: end;
+  filter: drop-shadow(0 12px 25px rgba(0,0,0,.65));
+  animation: cs-float 4.5s ease-in-out infinite;
+}
+.floating-cs > img {
+  width: 184px;
+  height: 184px;
+  object-fit: cover;
+  object-position: center 47%;
+  border: 3px solid #8af2ff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px rgba(49,207,255,.13), 0 0 45px rgba(29,177,255,.68), inset 0 0 22px rgba(255,255,255,.2);
+  filter: saturate(1.2) contrast(1.06) hue-rotate(8deg);
+}
+.cs-glow { width: 170px; height: 155px; bottom: 14px; background: rgba(26,190,255,.8); filter: blur(48px); }
+.cs-headset {
+  position: absolute;
+  z-index: 4;
+  left: 18px;
+  bottom: 46px;
+  width: 181px;
+  height: 174px;
+  border: 9px solid #b9f7ff;
+  border-bottom: 0;
+  border-radius: 100px 100px 0 0;
+  filter: drop-shadow(0 0 7px #22cfff) drop-shadow(0 2px 3px #061a3b);
+  pointer-events: none;
+}
+.cs-headset::before,
+.cs-headset::after {
+  content: "";
+  position: absolute;
+  top: 62px;
+  width: 20px;
+  height: 43px;
+  border: 3px solid #d9fbff;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #32dfff, #075cae);
+  box-shadow: 0 0 15px #26cfff;
+}
+.cs-headset::before { left: -13px; }
+.cs-headset::after { right: -13px; }
+.cs-bubble {
+  top: -1px;
+  right: 0;
+  max-width: 210px;
+  white-space: normal;
+  text-align: center;
+  padding: 13px 18px;
+  border: 2px solid #b8f7ff;
+  border-radius: 17px 17px 4px 17px;
+  background: linear-gradient(135deg, #fff, #c8f4ff);
+  color: #05294c;
+  font-size: 16px;
+  line-height: 1.15;
+  font-weight: 1000;
+  letter-spacing: .2px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.45), 0 0 22px rgba(60,216,255,.35);
+  animation: bubble-pop .42s cubic-bezier(.2,.8,.2,1);
+}
+.cs-online {
+  right: 4px;
+  bottom: 3px;
+  padding: 7px 11px;
+  font-size: 9px;
+  letter-spacing: 1.1px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
+}
+@keyframes cs-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+/* Hide the Next.js development badge; it is tooling UI, not part of AJRASTORE. */
+nextjs-portal { display: none !important; }
+
+@media (max-width: 640px) {
+  .landing-backdrop { background-position: 54% top; }
+  .floating-cs { right: 9px; bottom: 9px; width: 154px; height: 178px; }
+  .floating-cs > img { width: 139px; height: 139px; }
+  .cs-glow { width: 130px; height: 120px; }
+  .cs-headset { left: 9px; bottom: 35px; width: 137px; height: 132px; border-width: 7px; }
+  .cs-headset::before, .cs-headset::after { top: 48px; width: 16px; height: 34px; }
+  .cs-headset::before { left: -10px; }
+  .cs-headset::after { right: -10px; }
+  .cs-bubble { max-width: 165px; padding: 10px 13px; font-size: 13px; }
+  .cs-online { font-size: 7px; padding: 5px 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .snow-particle, .hero-art, .hero-glow, .hero-orbit, .floating-cs, .primary-cta::after { animation: none !important; }
+}
+
+.floating-cs::before {
+  content: ""; position: absolute; z-index: 5; right: 25px; bottom: 73px; width: 44px; height: 28px;
+  border-right: 4px solid #d8fbff; border-bottom: 4px solid #d8fbff; border-radius: 0 0 17px 0;
+  filter: drop-shadow(0 0 5px #24d8ff); pointer-events: none;
+}
+.floating-cs::after {
+  content: ""; position: absolute; z-index: 6; right: 19px; bottom: 68px; width: 13px; height: 10px;
+  border-radius: 50%; background: #8df4ff; box-shadow: 0 0 12px #36dfff; pointer-events: none;
+}
+.service-card { animation: card-rise .7s both; }
+.service-card:nth-child(2) { animation-delay: .12s; }
+.service-card:nth-child(3) { animation-delay: .24s; }
+@keyframes card-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 640px) {
+  .floating-cs::before { right: 17px; bottom: 58px; transform: scale(.78); transform-origin: bottom right; }
+  .floating-cs::after { right: 13px; bottom: 54px; transform: scale(.8); }
+}
+
+
+/* =========================================================
+   AJRASTORE REVISION 3 — cleaner typography, bright blue,
+   full-page fast snowfall, compact CS headset, clean benefits.
+========================================================= */
+.ajra-landing {
+  --ice: #dffaff;
+  --cyan: #48e5ff;
+  --blue: #168fff;
+  --deep: #063b78;
+  color: #f5fcff;
+  background: #0750a0;
+  font-family: "Rajdhani", "Trebuchet MS", sans-serif;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.ajra-landing p { letter-spacing: .01em; line-height: 1.65; }
+.ajra-landing h1,
+.ajra-landing h2,
+.ajra-landing h3,
+.ajra-landing .primary-cta,
+.ajra-landing .secondary-cta,
+.ajra-landing .service-action,
+.ajra-landing .ajra-brand strong {
+  font-family: "Rajdhani", "Trebuchet MS", sans-serif;
+  font-weight: 700;
+  letter-spacing: .015em;
+}
+.landing-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background-image:
+    linear-gradient(180deg, rgba(4, 53, 116, .42), rgba(3, 49, 107, .58) 38%, rgba(2, 25, 66, .82) 100%),
+    url("/art-background.jpg");
+  background-position: center 9%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: saturate(1.12) contrast(1.02);
+  transform: scale(1.02);
+}
+.ajra-landing::before {
+  background:
+    radial-gradient(ellipse at 75% 8%, rgba(60, 220, 255, .35), transparent 34%),
+    radial-gradient(ellipse at 10% 42%, rgba(27, 142, 255, .3), transparent 38%),
+    radial-gradient(ellipse at 52% 78%, rgba(39, 132, 255, .2), transparent 44%),
+    linear-gradient(90deg, rgba(2, 34, 83, .23), rgba(4, 49, 104, .08) 50%, rgba(2, 29, 76, .26));
+}
+/* Fixed viewport snow layer remains visible while the user scrolls every section. */
+.snow-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 60;
+  pointer-events: none;
+  overflow: hidden;
+}
+.snow-particle {
+  top: -18px;
+  background: radial-gradient(circle at 35% 30%, #fff 0 25%, #d5f8ff 52%, #72dcff 100%);
+  box-shadow: 0 0 6px rgba(225, 250, 255, .95), 0 0 14px rgba(74, 193, 255, .62);
+  animation-name: ajra-snowfall-fast;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@keyframes ajra-snowfall-fast {
+  0% { transform: translate3d(0, -8vh, 0) rotate(0); opacity: 0; }
+  8% { opacity: .95; }
+  50% { transform: translate3d(24px, 54vh, 0) rotate(180deg); }
+  92% { opacity: .8; }
+  100% { transform: translate3d(-18px, 112vh, 0) rotate(360deg); opacity: 0; }
+}
+/* Refined type scale: readable, compact tracking, no ultra-heavy Impact face. */
+.ajra-brand strong { font-size: 23px; letter-spacing: .045em; }
+.ajra-brand small { letter-spacing: .12em; }
+.ajra-nav a { font-size: 15px; letter-spacing: .035em; font-weight: 600; }
+.hero-copy h1 {
+  font-size: clamp(42px, 5.5vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -.025em;
+  font-weight: 700;
+  text-shadow: 0 4px 24px rgba(0, 15, 45, .34);
+}
+.section-heading h2, .stock-copy h2, .owner-copy h2, .closing-cta h2 {
+  line-height: 1.08;
+  letter-spacing: -.018em;
+  font-weight: 700;
+}
+.hero-copy p, .stock-copy p, .owner-copy p, .section-heading > p {
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: .005em;
+}
+.primary-cta, .secondary-cta {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .055em;
+}
+/* Two service cards on the first row, the third centered beneath them. */
+.service-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 920px;
+  margin-inline: auto;
+}
+.service-card:nth-child(3) {
+  grid-column: 1 / -1;
+  width: min(100%, 448px);
+  justify-self: center;
+}
+.service-image-wrap { height: 255px; }
+.service-image-wrap::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(220,250,255,.78) 0 2px, transparent 4px),
+    radial-gradient(circle at 76% 22%, rgba(180,240,255,.7) 0 3px, transparent 5px),
+    radial-gradient(circle at 62% 62%, rgba(205,250,255,.65) 0 2px, transparent 4px),
+    radial-gradient(circle at 35% 74%, rgba(130,220,255,.6) 0 3px, transparent 6px);
+  background-size: 100% 100%;
+  animation: bubble-shimmer 5s ease-in-out infinite alternate;
+}
+@keyframes bubble-shimmer {
+  from { opacity: .38; transform: translateY(3px); }
+  to { opacity: .95; transform: translateY(-5px); }
+}
+.service-tag, .service-number { z-index: 3; }
+.service-content h3 { font-size: 22px; letter-spacing: .015em; font-weight: 700; }
+.service-content p { font-size: 15px; line-height: 1.65; }
+.service-action { font-size: 13px; letter-spacing: .04em; }
+/* Why AJRASTORE: editorial rows instead of generic glowing AI-looking tiles. */
+.benefit-section { padding-top: 76px; }
+.centered-heading { max-width: 700px; }
+.centered-heading h2 { font-size: clamp(32px, 4vw, 48px); }
+.centered-heading > p { max-width: 520px; font-size: 16px; }
+.benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 34px;
+  max-width: 900px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(178, 235, 255, .28);
+}
+.benefit-card {
+  display: grid;
+  grid-template-columns: 44px 1fr 20px;
+  align-items: center;
+  gap: 16px;
+  min-height: 118px;
+  padding: 20px 8px;
+  border: 0;
+  border-bottom: 1px solid rgba(178, 235, 255, .24);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  transition: background .22s ease, padding .22s ease;
+}
+.benefit-card:hover {
+  transform: none;
+  padding-inline: 14px;
+  border-color: rgba(178, 235, 255, .36);
+  background: linear-gradient(90deg, rgba(80, 190, 255, .12), transparent);
+  box-shadow: none;
+}
+.benefit-number {
+  position: static !important;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(142, 231, 255, .55);
+  border-radius: 50%;
+  color: #b9f5ff !important;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+.benefit-copy h3 { margin: 0 0 5px; color: #f1fbff; font-size: 20px; font-weight: 700; letter-spacing: .01em; }
+.benefit-copy p { margin: 0; color: #b5d1e6; font-size: 14px; line-height: 1.55; }
+.benefit-arrow { color: #73e6ff; font-size: 20px; font-weight: 600; }
+/* Small headset sits around the character's head, not around the entire portrait. */
+.floating-cs {
+  right: 18px;
+  bottom: 14px;
+  width: 166px;
+  height: 184px;
+  align-items: end;
+  justify-content: center;
+  animation: cs-float 4.5s ease-in-out infinite;
+}
+.floating-cs > img {
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  object-position: center 43%;
+  border: 2px solid rgba(126, 239, 255, .9);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(49,207,255,.12), 0 0 27px rgba(29,177,255,.48);
+}
+.cs-glow { width: 118px; height: 105px; bottom: 8px; filter: blur(35px); opacity: .65; }
+.cs-headset {
+  left: 43px;
+  top: 43px;
+  bottom: auto;
+  width: 80px;
+  height: 70px;
+  border: 4px solid #c9f8ff;
+  border-bottom: 0;
+  border-radius: 48px 48px 0 0;
+  filter: drop-shadow(0 0 5px #22cfff);
+}
+.cs-headset::before, .cs-headset::after {
+  top: 24px;
+  width: 11px;
+  height: 25px;
+  border: 2px solid #e5fcff;
+  border-radius: 6px;
+  background: linear-gradient(145deg, #48e7ff, #0870bd);
+  box-shadow: 0 0 9px #26cfff;
+}
+.cs-headset::before { left: -8px; }
+.cs-headset::after { right: -8px; }
+/* Tiny microphone boom near the cheek. */
+.floating-cs::before {
+  right: 36px;
+  bottom: 64px;
+  width: 22px;
+  height: 15px;
+  border-right: 2px solid #d8fbff;
+  border-bottom: 2px solid #d8fbff;
+  border-radius: 0 0 10px 0;
+}
+.floating-cs::after { right: 32px; bottom: 61px; width: 7px; height: 7px; }
+.cs-bubble {
+  top: -5px;
+  right: 0;
+  max-width: 164px;
+  padding: 9px 13px;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: .01em;
+  font-weight: 700;
+  border-radius: 13px 13px 4px 13px;
+}
+.cs-online { right: 10px; bottom: 1px; font-size: 8px; padding: 5px 8px; }
+@media (max-width: 850px) {
+  .service-grid { max-width: 720px; }
+  .service-image-wrap { height: 220px; }
+}
+@media (max-width: 640px) {
+  .ajra-header, .ajra-hero { width: calc(100% - 34px); }
+  .section-shell { width: calc(100% - 34px); }
+  .landing-backdrop { background-position: 58% top; }
+  .service-grid { grid-template-columns: 1fr; gap: 16px; }
+  .service-card:nth-child(3) { grid-column: auto; width: 100%; }
+  .service-image-wrap { height: 230px; }
+  .benefit-grid { grid-template-columns: 1fr; gap: 0; }
+  .benefit-card { min-height: 100px; padding: 16px 4px; }
+  .benefit-copy h3 { font-size: 18px; }
+  .benefit-copy p { font-size: 13px; }
+  .floating-cs { right: 8px; bottom: 8px; width: 148px; height: 164px; }
+  .floating-cs > img { width: 116px; height: 116px; }
+  .cs-headset { left: 38px; top: 43px; width: 72px; height: 63px; border-width: 4px; }
+  .cs-headset::before, .cs-headset::after { top: 21px; width: 10px; height: 22px; }
+  .cs-bubble { max-width: 150px; font-size: 13px; padding: 8px 10px; }
+  .cs-online { font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .snow-particle, .service-image-wrap::before, .floating-cs { animation: none !important; }
+}
+
+/* =====================================================
+   AJRASTORE REVISION 4 — refined typography, imagery,
+   partner marquee and shared Pasang Bot visual system
+===================================================== */
+
+.ajra-landing,
+.bot-page {
+  font-family: "Rajdhani", "Segoe UI", sans-serif;
+}
+.ajra-landing h1,
+.ajra-landing h2,
+.ajra-landing h3,
+.ajra-landing .ajra-brand strong,
+.bot-page h1,
+.bot-page h2,
+.bot-page h3,
+.bot-page .bot-brand span {
+  font-family: "Oxanium", "Rajdhani", sans-serif;
+}
+
+/* Put the leader artwork visibly behind the blue atmospheric veil. */
+.landing-backdrop {
+  background:
+    linear-gradient(180deg, rgba(2, 34, 78, .50), rgba(3, 47, 100, .74) 48%, rgba(2, 22, 55, .91) 100%),
+    url("/art-background.jpg") center 16% / cover no-repeat;
+  filter: saturate(1.18) contrast(1.05);
+}
+.landing-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/art-check.jpg") right 8% top 12% / min(58vw, 760px) auto no-repeat;
+  opacity: .13;
+  mix-blend-mode: screen;
+  filter: saturate(1.25) blur(1px);
+  pointer-events: none;
+}
+
+/* No headset frame or artificial microphone over the CS mascot. */
+.cs-headset,
+.floating-cs::before,
+.floating-cs::after { display: none !important; content: none !important; }
+
+/* Partner / payment methods ticker before the footer. */
+.partner-marquee {
+  width: min(1160px, calc(100% - 64px));
+  margin: 12px auto 64px;
+  padding: 22px 0 25px;
+  border-top: 1px solid rgba(145, 226, 255, .18);
+  border-bottom: 1px solid rgba(145, 226, 255, .18);
+  overflow: hidden;
+  background: linear-gradient(90deg, transparent, rgba(26, 126, 205, .12), transparent);
+}
+.partner-marquee-label {
+  margin-bottom: 18px;
+  color: #8bdff8;
+  text-align: center;
+  font: 700 10px/1 "Oxanium", sans-serif;
+  letter-spacing: .24em;
+}
+.partner-marquee-window { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.partner-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(34px, 6vw, 82px);
+  width: max-content;
+  animation: partnerTicker 28s linear infinite;
+}
+.partner-marquee:hover .partner-marquee-track { animation-play-state: paused; }
+.partner-wordmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  color: #e7f8ff;
+  font-family: "Oxanium", sans-serif;
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 800;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  text-shadow: 0 0 18px rgba(70, 205, 255, .25);
+}
+.partner-lords { color: #dff7ff; letter-spacing: .1em; }
+.partner-bot { color: #91e7ff; }
+.partner-gopay { color: #7ec7ff; font-style: italic; }
+.partner-qris { color: #fff; letter-spacing: .18em; }
+.partner-dana { color: #7ab8ff; }
+.partner-ovo { color: #b7a1ff; }
+@keyframes partnerTicker { to { transform: translateX(-50%); } }
+
+/* Informative footer */
+.ajra-footer {
+  display: block;
+  width: 100%;
+  padding: 38px max(32px, calc((100% - 1160px) / 2)) 20px;
+  border-top: 1px solid rgba(135, 223, 255, .2);
+  background: linear-gradient(180deg, rgba(3, 34, 73, .88), rgba(1, 15, 37, .98));
+}
+.footer-main {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  align-items: center;
+  gap: 34px;
+  padding-bottom: 30px;
+}
+.footer-brand { display: inline-flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; }
+.footer-brand img { width: 48px; height: 48px; object-fit: cover; border-radius: 10px; }
+.footer-brand span { display: grid; gap: 3px; }
+.footer-brand strong { font: 800 19px/1 "Oxanium", sans-serif; letter-spacing: .08em; }
+.footer-brand small { color: #83dff5; font: 700 8px/1.2 "Rajdhani", sans-serif; letter-spacing: .16em; }
+.footer-main > p { max-width: 390px; margin: 0; color: #a9c7dc; font-size: 14px; line-height: 1.65; }
+.footer-socials { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px; }
+.footer-socials a {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border: 1px solid rgba(136, 225, 255, .24);
+  border-radius: 7px; color: #d9f6ff; text-decoration: none;
+  font: 700 10px/1 "Oxanium", sans-serif; letter-spacing: .06em;
+  transition: .2s ease;
+}
+.footer-socials a:hover { color: #05213b; background: #8feaff; border-color: #8feaff; transform: translateY(-2px); }
+.footer-socials b { color: #69e0ff; }
+.footer-bottom {
+  display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap;
+  padding-top: 18px; border-top: 1px solid rgba(135, 223, 255, .12);
+  color: #729bb8; font: 600 9px/1.5 "Oxanium", sans-serif; letter-spacing: .12em;
+}
+
+/* Pasang Bot now shares AJRASTORE's icy-blue background and continuous snow. */
+.bot-page {
+  isolation: isolate;
+  min-height: 100svh;
+  color: #f3fbff;
+  background: linear-gradient(180deg, #073b79 0%, #07549b 42%, #031d49 100%);
+}
+.bot-page-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(2, 37, 83, .72), rgba(3, 50, 104, .82) 45%, rgba(2, 21, 54, .94)),
+    url("/art-background.jpg") center 18% / cover no-repeat;
+  filter: saturate(1.22) contrast(1.04);
+}
+.bot-page-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/art-check.jpg") right 4% top 8% / min(52vw, 680px) auto no-repeat;
+  opacity: .11;
+  mix-blend-mode: screen;
+}
+.bot-page::before {
+  z-index: -1;
+  background-size: 58px 58px;
+  opacity: .32;
+}
+.bot-bg-glow { opacity: .24; filter: blur(125px); }
+.glow-one { background: #18bfff; }
+.glow-two { background: #376dff; }
+.bot-container { z-index: 3; }
+.bot-snow-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bot-snow-particle {
+  position: absolute;
+  top: -12px;
+  display: block;
+  border-radius: 50%;
+  background: rgba(231, 250, 255, .92);
+  box-shadow: 0 0 8px rgba(106, 221, 255, .9), 0 0 16px rgba(73, 171, 255, .5);
+  animation: botSnowFall linear infinite;
+}
+@keyframes botSnowFall {
+  0% { transform: translate3d(0, -3vh, 0); opacity: 0; }
+  8% { opacity: .95; }
+  92% { opacity: .8; }
+  100% { transform: translate3d(32px, 108vh, 0); opacity: 0; }
+}
+.bot-brand span {
+  color: #eafaff;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  font-size: 21px;
+  letter-spacing: .13em;
+}
+.bot-brand small { color: #a8eaff; }
+.bot-hero h1 { font-family: "Oxanium", sans-serif; letter-spacing: -.035em; }
+.bot-hero h1 span { background-image: linear-gradient(120deg, #eaffff, #68e4ff 55%, #7bb7ff); }
+.bot-hero p { color: #c2e2f5; }
+.bot-section .section-heading h2,
+.package-section .section-heading h2 { color: #f1fbff; font-family: "Oxanium", sans-serif; }
+.bot-section .section-heading p,
+.package-section .section-heading p { color: #b3d9ef; }
+.form-card,
+.notice-card,
+.package-card,
+.feature-card {
+  border-color: rgba(159, 229, 255, .28);
+  background: linear-gradient(145deg, rgba(8, 82, 145, .78), rgba(4, 37, 86, .88));
+  box-shadow: 0 18px 44px rgba(0, 14, 43, .2), inset 0 1px rgba(255,255,255,.06);
+  backdrop-filter: blur(12px);
+}
+.field label { color: #d7f2ff; }
+.field input, .field select {
+  color: #f2fbff;
+  border-color: rgba(159, 229, 255, .28);
+  background: rgba(1, 25, 61, .72);
+}
+.field input::placeholder { color: #9bbbd2; }
+.package-card:hover { border-color: #77e7ff; box-shadow: 0 18px 45px rgba(0, 30, 80, .35), 0 0 22px rgba(53, 203, 255, .14); }
+.package-card.active { border-color: #75eaff; background: linear-gradient(145deg, rgba(13, 119, 183, .72), rgba(5, 49, 105, .92)); }
+.package-price { background-image: linear-gradient(120deg, #fff, #8beaff); }
+.continue-button { font-family: "Oxanium", sans-serif; }
+
+@media (max-width: 760px) {
+  .partner-marquee { width: calc(100% - 34px); margin-bottom: 42px; }
+  .footer-main { grid-template-columns: 1fr; gap: 18px; }
+  .footer-socials { justify-content: flex-start; }
+  .ajra-footer { padding: 30px 18px 18px; }
+  .bot-header { margin-bottom: 58px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .partner-marquee-track, .bot-snow-particle { animation: none !important; }
 }

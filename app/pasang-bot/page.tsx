@@ -66,6 +66,22 @@ export default function PasangBot() {
 
   return (
     <main className="bot-page">
+      <div className="bot-page-backdrop" aria-hidden="true" />
+      <div className="bot-snow-layer" aria-hidden="true">
+        {Array.from({ length: 72 }, (_, i) => (
+          <span
+            key={i}
+            className="bot-snow-particle"
+            style={{
+              left: `${(i * 31 + 5) % 100}%`,
+              animationDelay: `${(i % 17) * -0.8}s`,
+              animationDuration: `${3.2 + (i % 5) * 0.75}s`,
+              width: `${2 + (i % 4)}px`,
+              height: `${2 + (i % 4)}px`,
+            }}
+          />
+        ))}
+      </div>
       <div className="bot-bg-glow glow-one" />
       <div className="bot-bg-glow glow-two" />
 
@@ -378,27 +394,27 @@ export default function PasangBot() {
     {[
       {
         name: "1 Bulan",
-        price: "Rp10.000",
+        price: "Rp25.000",
         desc: "Cocok untuk mencoba layanan",
       },
       {
         name: "3 Bulan",
-        price: "Rp30.000",
+        price: "Rp75.000",
         desc: "Pilihan paling fleksibel",
       },
       {
         name: "6 Bulan",
-        price: "Rp60.000",
+        price: "Rp135.000",
         desc: "Untuk penggunaan jangka panjang",
       },
       {
         name: "1 Tahun",
-        price: "Rp120.000",
+        price: "Rp200.000",
         desc: "Lebih praktis untuk setahun",
       },
       {
         name: "Permanent",
-        price: "Rp250.000",
+        price: "Rp400.000",
         desc: "Sekali bayar, tanpa batas masa aktif",
         featured: true,
       },
