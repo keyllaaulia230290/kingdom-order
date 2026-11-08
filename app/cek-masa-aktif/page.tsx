@@ -175,7 +175,7 @@ Mohon informasi perpanjangannya.`;
               className="admin-primary-button"
               disabled={loading}
             >
-              {loading ? "MENCARI..." : "🔍 CEK SEKARANG"}
+              {loading ? "MENCARI..." : " CEK SEKARANG"}
             </button>
           </form>
 
@@ -183,7 +183,7 @@ Mohon informasi perpanjangannya.`;
 
           {searched && !loading && !bot && (
             <div className="admin-empty">
-              <span>🔎</span>
+              <span className="text-icon">INFO</span>
 
               <strong>Bot tidak ditemukan</strong>
 
@@ -269,7 +269,7 @@ Mohon informasi perpanjangannya.`;
 
               {daysLeft > 0 && daysLeft <= 3 && (
                 <div className="bot-warning">
-                  ⚠️ Masa aktif bot kamu akan segera berakhir. Silakan lakukan
+                   Masa aktif bot kamu akan segera berakhir. Silakan lakukan
                   perpanjangan.
                 </div>
               )}
@@ -279,7 +279,7 @@ Mohon informasi perpanjangannya.`;
               {daysLeft <= 0 && (
                 <>
                   <div className="bot-warning">
-                    ⚠️ Masa aktif bot ini sudah berakhir. Silakan lakukan
+                     Masa aktif bot ini sudah berakhir. Silakan lakukan
                     perpanjangan untuk mengaktifkannya kembali.
                   </div>
 
@@ -290,7 +290,7 @@ Mohon informasi perpanjangannya.`;
                     onClick={openWhatsApp}
                     className="bot-whatsapp-renew"
                   >
-                    <span className="bot-whatsapp-icon">💬</span>
+                    <span className="bot-whatsapp-icon">CS</span>
 
                     <span className="bot-whatsapp-content">
                       <strong>Perpanjang Bot</strong>

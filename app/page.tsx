@@ -72,7 +72,7 @@ export default function Home() {
         <nav className={menuOpen ? "ajra-nav nav-open" : "ajra-nav"}>
           <a href="#layanan" onClick={() => setMenuOpen(false)}>Layanan</a>
           <a href="#owner" onClick={() => setMenuOpen(false)}>Tentang Kami</a>
-          <a className="nav-cta" href="https://order.ajra.store">ORDER RSS <span>↗</span></a>
+          <a className="nav-cta" href="https://order.ajra.store">ORDER RSS <span></span></a>
         </nav>
       </header>
 
@@ -82,17 +82,17 @@ export default function Home() {
           <h1>LEVEL UP YOUR<br /><em>LORDS MOBILE</em><br />EXPERIENCE.</h1>
           <p>Solusi kebutuhan Lords Mobile dalam satu tempat. Order RSS, layanan bot, dan dukungan pelanggan dengan pengalaman yang praktis.</p>
           <div className="hero-actions">
-            <a className="primary-cta" href="https://order.ajra.store">ORDER RSS <span>↗</span></a>
+            <a className="primary-cta" href="https://order.ajra.store">ORDER RSS <span></span></a>
             <a className="secondary-cta" href="#layanan">JELAJAHI LAYANAN <span>↓</span></a>
           </div>
-          <div className="hero-proof"><span><b>✦</b> LORDS MOBILE SERVICE</span><span><b>✦</b> CUSTOMER SUPPORT</span></div>
+          <div className="hero-proof"><span>LORDS MOBILE SERVICE</span><span>CUSTOMER SUPPORT</span></div>
         </div>
         <div className="hero-art-wrap">
           <div className="hero-orbit orbit-a" /><div className="hero-orbit orbit-b" />
           <div className="hero-glow" />
           <Image className="hero-art" src="/art-hero.jpg" alt="Artwork karakter Lords Mobile" width={554} height={554} priority />
           <div className="hero-sticker"><span>AJRA</span><strong>STORE</strong><small>PLAY SMARTER</small></div>
-          <div className="hero-floating-chip">✦ RESOURCE & BOT SERVICE</div>
+          <div className="hero-floating-chip">RESOURCE & BOT SERVICE</div>
         </div>
         <div className="hero-bottom-label"><span>01 / 03</span><i /> BUILT FOR LORDS MOBILE PLAYERS</div>
       </section>
@@ -112,7 +112,7 @@ export default function Home() {
               </div>
               <div className="service-content">
                 <h3>{service.title}</h3><p>{service.description}</p>
-                <span className="service-action">{service.action} <b>↗</b></span>
+                <span className="service-action">{service.action} <b></b></span>
               </div>
             </a>
           ))}
@@ -129,7 +129,7 @@ export default function Home() {
           <span className="section-kicker">COMMUNITY UPDATE</span>
           <h2>STOK AKUN<br /><em>LORDS MOBILE.</em></h2>
           <p>Ikuti channel resmi AJRASTORE untuk melihat informasi stok akun, update terbaru, dan penawaran yang tersedia.</p>
-          <a className="primary-cta" href="https://whatsapp.com/channel/0029Vb6L7sZFy72JnilqWA1a" target="_blank" rel="noreferrer">LIHAT STOK AKUN <span>↗</span></a>
+          <a className="primary-cta" href="https://whatsapp.com/channel/0029Vb6L7sZFy72JnilqWA1a" target="_blank" rel="noreferrer">LIHAT STOK AKUN <span></span></a>
         </div>
       </section>
 
@@ -148,7 +148,7 @@ export default function Home() {
 
       <section className="closing-cta section-shell">
         <div><span className="section-kicker">READY TO GET STARTED?</span><h2>LET’S MAKE YOUR<br /><em>NEXT MOVE.</em></h2></div>
-        <a className="primary-cta" href="https://order.ajra.store">MULAI ORDER RSS <span>↗</span></a>
+        <a className="primary-cta" href="https://order.ajra.store">MULAI ORDER RSS <span></span></a>
       </section>
 
       <section className="partner-marquee" aria-label="Layanan dan metode pembayaran">
@@ -183,13 +183,13 @@ export default function Home() {
           </a>
           <p>Solusi kebutuhan Lords Mobile: pemesanan RSS, layanan bot, dan bantuan pelanggan dalam satu tempat.</p>
           <div className="footer-socials">
-            <a href="https://www.instagram.com/ajrastoree?srtk=MXNpdDcyMGVudmZpcA==" target="_blank" rel="noreferrer">INSTAGRAM <b>↗</b></a>
-            <a href="https://www.tiktok.com/@ajramarketlm?_r=1&_t=ZS-9BDea145QRg" target="_blank" rel="noreferrer">TIKTOK <b>↗</b></a>
-            <a href="https://wa.me/6285885385659" target="_blank" rel="noreferrer">WHATSAPP CS <b>↗</b></a>
+            <a href="https://www.instagram.com/ajrastoree?srtk=MXNpdDcyMGVudmZpcA==" target="_blank" rel="noreferrer">INSTAGRAM <b></b></a>
+            <a href="https://www.tiktok.com/@ajramarketlm?_r=1&_t=ZS-9BDea145QRg" target="_blank" rel="noreferrer">TIKTOK <b></b></a>
+            <a href="https://wa.me/6285885385659" target="_blank" rel="noreferrer">WHATSAPP CS <b></b></a>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} AJRASTORE. ALL RIGHTS RESERVED.</span>
+          <span> {new Date().getFullYear()} AJRASTORE. ALL RIGHTS RESERVED.</span>
           <span>CEPAT • AMAN • TERPERCAYA</span>
         </div>
       </footer>

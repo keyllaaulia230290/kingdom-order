@@ -404,7 +404,7 @@ export default function BotAccountPage() {
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="🔎 Cari Nama Bot, IGG ID, atau Customer..."
+                  placeholder=" Cari Nama Bot, IGG ID, atau Customer..."
                 />
 
                 {search && (
@@ -413,7 +413,7 @@ export default function BotAccountPage() {
                     onClick={() => setSearch("")}
                     className="bot-search-clear"
                   >
-                    ✕
+                    
                   </button>
                 )}
               </div>
@@ -424,10 +424,10 @@ export default function BotAccountPage() {
                   onChange={(e) => setStatusFilter(e.target.value)}
                 >
                   <option value="all">Semua Bot</option>
-                  <option value="active">🟢 Aktif</option>
-                  <option value="warning">🟠 H-3 / Warning</option>
-                  <option value="expired">🔴 Expired</option>
-                  <option value="suspended">🟡 Suspend</option>
+                  <option value="active"> Aktif</option>
+                  <option value="warning"> H-3 / Warning</option>
+                  <option value="expired"> Expired</option>
+                  <option value="suspended"> Suspend</option>
                 </select>
               </div>
             </div>
@@ -438,7 +438,7 @@ export default function BotAccountPage() {
           {showForm && (
             <div className="bot-form-box">
               <div className="bot-form-title">
-                <span>{editingBot ? "✏️" : "🤖"}</span>
+                <span>{editingBot ? "" : ""}</span>
 
                 <div>
                   <strong>
@@ -556,8 +556,8 @@ export default function BotAccountPage() {
                     {saving
                       ? "MENYIMPAN..."
                       : editingBot
-                        ? "✓ SIMPAN PERUBAHAN"
-                        : "✓ SIMPAN BOT"}
+                        ? " SIMPAN PERUBAHAN"
+                        : " SIMPAN BOT"}
                   </button>
                 </div>
               </form>
@@ -568,7 +568,7 @@ export default function BotAccountPage() {
 
           {loading ? (
             <div className="admin-empty">
-              <span>⏳</span>
+              <span></span>
 
               <strong>Memuat bot...</strong>
 
@@ -576,7 +576,7 @@ export default function BotAccountPage() {
             </div>
           ) : bots.length === 0 ? (
             <div className="admin-empty">
-              <span>🤖</span>
+              <span className="text-icon">INFO</span>
 
               <strong>Belum ada bot</strong>
 
@@ -584,7 +584,7 @@ export default function BotAccountPage() {
             </div>
           ) : filteredBots.length === 0 ? (
             <div className="admin-empty">
-              <span>🔎</span>
+              <span className="text-icon">INFO</span>
 
               <strong>Bot tidak ditemukan</strong>
 

@@ -472,7 +472,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="cart-badge">🛒 {totalQuantity}</div>
+        <div className="cart-badge"> {totalQuantity}</div>
       </header>
 
       {/* =========================
@@ -598,7 +598,7 @@ export default function Home() {
 
             {discountApplied && (
               <p className="success-text">
-                ✓{" "}
+                {" "}
                 {discountCode.trim().toUpperCase() === "AJRAB0TVVIP"
                   ? "15%"
                   : "10%"}{" "}
@@ -642,7 +642,7 @@ export default function Home() {
       {showConfirm && (
         <div className="modal-backdrop">
           <div className="confirm-modal">
-            <div className="confirm-icon">🛒</div>
+            <div className="confirm-icon"></div>
 
             <h2>Confirm Your Order</h2>
 
@@ -709,7 +709,7 @@ export default function Home() {
       {showPayment && (
         <div className="modal-backdrop">
           <div className="payment-modal">
-            <div className="payment-icon">💳</div>
+            <div className="payment-icon"></div>
 
             <h2>Payment</h2>
 
@@ -796,7 +796,7 @@ export default function Home() {
       {showSuccess && (
         <div className="modal-backdrop success-backdrop">
           <div className="success-modal">
-            <div className="success-icon">✓</div>
+            <div className="success-icon"></div>
 
             <h2>Payment Successful!</h2>
 
@@ -827,7 +827,7 @@ export default function Home() {
                       className="copy-button"
                       onClick={() => copyKey(item.key)}
                     >
-                      {copiedKey === item.key ? "✓ COPIED" : "COPY"}
+                      {copiedKey === item.key ? " COPIED" : "COPY"}
                     </button>
                   </div>
                 ))}
@@ -865,11 +865,11 @@ export default function Home() {
       ========================= */}
 
       <footer>
-        <span>🔒 Secure Payment</span>
+        <span> Secure Payment</span>
 
-        <span>⚡ Fast Delivery</span>
+        <span> Fast Delivery</span>
 
-        <span>🎧 Support</span>
+        <span> Support</span>
       </footer>
     </main>
   );

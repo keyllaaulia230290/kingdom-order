@@ -301,7 +301,7 @@ export default function OrderPage() {
 
         <section className="order-stat-grid">
           <div className="order-stat-card">
-            <div className="order-stat-icon">🧾</div>
+            <div className="order-stat-icon"></div>
 
             <div>
               <span>TOTAL ORDER</span>
@@ -311,7 +311,7 @@ export default function OrderPage() {
           </div>
 
           <div className="order-stat-card order-stat-paid">
-            <div className="order-stat-icon">✓</div>
+            <div className="order-stat-icon"></div>
 
             <div>
               <span>PAID</span>
@@ -331,7 +331,7 @@ export default function OrderPage() {
           </div>
 
           <div className="order-stat-card">
-            <div className="order-stat-icon">💰</div>
+            <div className="order-stat-icon"></div>
 
             <div>
               <span>PENDAPATAN</span>
@@ -409,7 +409,7 @@ export default function OrderPage() {
 
           {loading ? (
             <div className="admin-empty">
-              <span>⏳</span>
+              <span></span>
 
               <strong>Memuat order...</strong>
 
@@ -417,7 +417,7 @@ export default function OrderPage() {
             </div>
           ) : orders.length === 0 ? (
             <div className="admin-empty order-empty">
-              <span>🧾</span>
+              <span className="text-icon">INFO</span>
 
               <strong>Belum ada order</strong>
 
@@ -565,7 +565,7 @@ export default function OrderPage() {
                           <div className="bot-actions">
                             {normalizedStatus === "paid" ? (
                               <span className="order-protected">
-                                🔒 RIWAYAT
+                                 RIWAYAT
                               </span>
                             ) : (
                               <button

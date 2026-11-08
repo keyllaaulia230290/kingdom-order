@@ -120,32 +120,32 @@ export default function PasangBot() {
             <span>01</span>
 
             <div>
-              <h2>✨ Fitur Bot</h2>
+              <h2>Fitur Bot</h2>
               <p>Fitur yang tersedia pada layanan bot.</p>
             </div>
           </div>
 
           <div className="feature-grid">
             {[
-              ["🛡️", "Auto Shield & Anti"],
-              ["📋", "Auto Daily Quest"],
-              ["🎁", "Send Help & Collect Gifts"],
-              ["🌾", "Auto Supply RSS"],
-              ["⛏️", "Nambang & Realm"],
-              ["⚔️", "Join Rally Darknest"],
-              ["🚚", "Auto Cargo"],
-              ["🦸", "Hero Stage"],
-              ["🏟️", "Auto Colosseum"],
-              ["🏗️", "Auto Build"],
-              ["🔬", "Auto Research"],
-              ["🛡️", "Auto Heal"],
-              ["🏹", "Auto Train"],
-              ["👹", "Attack Monster"],
-              ["🐾", "Auto Familiar"],
-              ["🏦", "Guild Bank"],
-              ["🚫", "Blacklist"],
-              ["✅", "Whitelist"],
-              ["✨", "Dan Lain-lain"],
+              ["AUTO", "Auto Shield & Anti"],
+              ["QUEST", "Auto Daily Quest"],
+              ["GUILD", "Send Help & Collect Gifts"],
+              ["RSS", "Auto Supply RSS"],
+              ["MINE", "Nambang & Realm"],
+              ["RALLY", "Join Rally Darknest"],
+              ["CARGO", "Auto Cargo"],
+              ["HERO", "Hero Stage"],
+              ["ARENA", "Auto Colosseum"],
+              ["BUILD", "Auto Build"],
+              ["TECH", "Auto Research"],
+              ["HEAL", "Auto Heal"],
+              ["TRAIN", "Auto Train"],
+              ["HUNT", "Attack Monster"],
+              ["PACT", "Auto Familiar"],
+              ["BANK", "Guild Bank"],
+              ["BLOCK", "Blacklist"],
+              ["ALLOW", "Whitelist"],
+              ["MORE", "Dan Lain-lain"],
             ].map(([icon, title]) => (
               <div className="feature-card" key={title}>
                 <span>{icon}</span>
@@ -162,7 +162,7 @@ export default function PasangBot() {
             <span>02</span>
 
             <div>
-              <h2>📋 Pengaturan Bot</h2>
+              <h2>Pengaturan Bot</h2>
               <p>Isi konfigurasi bot akun kamu.</p>
             </div>
           </div>
@@ -316,7 +316,7 @@ export default function PasangBot() {
             <span>03</span>
 
             <div>
-              <h2>🔐 Data Login Akun</h2>
+              <h2>Data Login Akun</h2>
               <p>Data login digunakan untuk proses pemasangan bot.</p>
             </div>
           </div>
@@ -358,7 +358,7 @@ export default function PasangBot() {
           <div className="notice-icon">!</div>
 
           <div>
-            <h3>📝 Keterangan Tambahan</h3>
+            <h3>Keterangan Tambahan</h3>
 
             <ul>
               <li>
@@ -385,7 +385,7 @@ export default function PasangBot() {
     <span>04</span>
 
     <div>
-      <h2>💎 Pilihan Paket</h2>
+      <h2>Pilihan Paket</h2>
       <p>Pilih masa aktif bot sesuai kebutuhan kamu.</p>
     </div>
   </div>
@@ -434,7 +434,7 @@ export default function PasangBot() {
             <span className="package-badge">BEST VALUE</span>
           )}
 
-          <span className="package-icon">✦</span>
+          <span className="package-icon"></span>
 
           <strong className="package-name">{pkg.name}</strong>
 
@@ -443,7 +443,7 @@ export default function PasangBot() {
           <small>{pkg.desc}</small>
 
           <span className="package-check">
-            {active ? "✓ DIPILIH" : "PILIH PAKET"}
+            {active ? " DIPILIH" : "PILIH PAKET"}
           </span>
         </button>
       );

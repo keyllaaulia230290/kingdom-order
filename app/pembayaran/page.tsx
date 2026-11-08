@@ -123,9 +123,9 @@ export default function Pembayaran() {
         setMessage("Pembayaran berhasil dikonfirmasi.");
 
         const text = [
-          "Halo AJRASTORE 👋",
+          "Halo AJRASTORE,",
           "",
-          "📋 DATA PENGATURAN BOT",
+          "DATA PENGATURAN BOT",
           "",
           `Nickname Akun: ${botData?.nickname || "-"}`,
           `Nick Admin: ${botData?.adminNick || "-"}`,
@@ -147,16 +147,16 @@ export default function Pembayaran() {
           `Stage Hero: ${botData?.heroStage || "-"}`,
           `Auto Shield: ${botData?.shield || "-"}`,
           "",
-          "🔐 DATA LOGIN",
+          "DATA LOGIN",
           `Login Via: ${botData?.loginVia || "-"}`,
           `Email / Account: ${botData?.email || "-"}`,
           "",
-          "💰 PEMBAYARAN",
+          "PEMBAYARAN",
           `Paket: ${selectedPackage}`,
           `Nominal: ${formatRupiah(price)}`,
           `Transaction ID: ${qris.transaction_id}`,
           "",
-          "Mohon diproses ya. 🙏",
+          "Mohon diproses ya.",
         ].join("\n");
 
         const whatsappUrl = `https://wa.me/6285885385659?text=${encodeURIComponent(text)}`;
@@ -228,7 +228,7 @@ export default function Pembayaran() {
             <span>01</span>
 
             <div>
-              <h2>💎 Pilihan Paket</h2>
+              <h2> Pilihan Paket</h2>
               <p>Pilih paket yang ingin kamu gunakan.</p>
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function Pembayaran() {
 
                   <strong>{formatRupiah(packagePrice)}</strong>
 
-                  {active && <small>✓ DIPILIH</small>}
+                  {active && <small> DIPILIH</small>}
                 </button>
               );
             })}
@@ -265,7 +265,7 @@ export default function Pembayaran() {
             <span>02</span>
 
             <div>
-              <h2>💰 Detail Pembayaran</h2>
+              <h2> Detail Pembayaran</h2>
               <p>Periksa kembali paket sebelum membayar.</p>
             </div>
           </div>
@@ -290,7 +290,7 @@ export default function Pembayaran() {
             <span>03</span>
 
             <div>
-              <h2>📱 Pembayaran QRIS</h2>
+              <h2> Pembayaran QRIS</h2>
               <p>Scan QRIS di bawah menggunakan aplikasi pembayaran kamu.</p>
             </div>
           </div>
@@ -340,7 +340,7 @@ export default function Pembayaran() {
         {/* SECURITY */}
 
         <div className="payment-security">
-          <span>🔒</span>
+          <span className="text-icon">SECURE</span>
 
           <div>
             <strong>Pembayaran Aman</strong>
@@ -360,7 +360,7 @@ export default function Pembayaran() {
           onClick={handlePaid}
           disabled={checking || loadingQris || !qris}
         >
-          {checking ? "MEMERIKSA PEMBAYARAN..." : "✓ I HAVE PAID"}
+          {checking ? "MEMERIKSA PEMBAYARAN..." : " I HAVE PAID"}
         </button>
 
         <p className="payment-note">

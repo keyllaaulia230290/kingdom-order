@@ -198,7 +198,7 @@ export default function HistoryOrderKeyPage() {
 
           {loading ? (
             <div className="admin-empty">
-              <span>⏳</span>
+              <span></span>
 
               <strong>Memuat history...</strong>
 
@@ -206,7 +206,7 @@ export default function HistoryOrderKeyPage() {
             </div>
           ) : orders.length === 0 ? (
             <div className="admin-empty">
-              <span>🔑</span>
+              <span className="text-icon">INFO</span>
 
               <strong>Belum ada order key</strong>
 

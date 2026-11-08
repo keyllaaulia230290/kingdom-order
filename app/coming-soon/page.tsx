@@ -49,17 +49,17 @@ export default function ComingSoonPage() {
           <strong>LM</strong>
         </div>
 
-        <div className="coming-badge">☺️☺️☺️☺️☺️ WEBSITE UPDATE ☺️☺️☺️☺️☺️</div>
+        <div className="coming-badge"> WEBSITE UPDATE </div>
 
         <h1>
-          ☺️☺️ Website Akan ☺️☺️
+          Website Akan
           <br />
-          <span>☺️☺️ Segera Hadir ☺️☺️</span>
+          <span>Segera Hadir</span>
         </h1>
 
         <p className="coming-description">
           Kami sedang mempersiapkan website AJRASTORE dengan sistem yang lebih
-          baik dan lebih nyaman untuk digunakan. ☺️☺️☺️☺️
+          baik dan lebih nyaman untuk digunakan. 
         </p>
 
         <div className="coming-release">
@@ -93,7 +93,7 @@ export default function ComingSoonPage() {
             </div>
           </div>
 
-          <p>11 September 2026 • 19:00 WIB ☺️☺️</p>
+          <p>11 September 2026 • 19:00 WIB </p>
         </div>
 
         <div className="coming-footer">

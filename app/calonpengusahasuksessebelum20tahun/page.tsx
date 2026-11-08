@@ -177,7 +177,7 @@ export default function AdminPage() {
         {/* STATS */}
         <section className="admin-stats">
           <div className="admin-stat">
-            <span>👥</span>
+            <span className="text-icon">CUST</span>
 
             <small>TOTAL CUSTOMER</small>
 
@@ -185,7 +185,7 @@ export default function AdminPage() {
           </div>
 
           <div className="admin-stat">
-            <span>🤖</span>
+            <span className="text-icon">BOT</span>
 
             <small>BOT AKTIF</small>
 
@@ -193,7 +193,7 @@ export default function AdminPage() {
           </div>
 
           <div className="admin-stat">
-            <span>⏰</span>
+            <span></span>
 
             <small>EXPIRED H-3</small>
 
@@ -201,7 +201,7 @@ export default function AdminPage() {
           </div>
 
           <div className="admin-stat">
-            <span>🧾</span>
+            <span className="text-icon">ORD</span>
 
             <small>TOTAL ORDER</small>
 
@@ -224,7 +224,7 @@ export default function AdminPage() {
               href="/calonpengusahasuksessebelum20tahun/customer"
               className="admin-menu-item"
             >
-              <span>👥</span>
+              <span className="text-icon">01</span>
 
               <strong>Customer</strong>
 
@@ -235,7 +235,7 @@ export default function AdminPage() {
               href="/calonpengusahasuksessebelum20tahun/bot-account"
               className="admin-menu-item"
             >
-              <span>🤖</span>
+              <span className="text-icon">02</span>
 
               <strong>Bot Account</strong>
 
@@ -246,7 +246,7 @@ export default function AdminPage() {
               href="/calonpengusahasuksessebelum20tahun/order"
               className="admin-menu-item"
             >
-              <span>🧾</span>
+              <span className="text-icon">03</span>
 
               <strong>Order</strong>
 
@@ -257,7 +257,7 @@ export default function AdminPage() {
               href="/calonpengusahasuksessebelum20tahun/history-order-key"
               className="admin-menu-item"
             >
-              <span>🔑</span>
+              <span className="text-icon">04</span>
 
               <strong>History Order Key</strong>
 
@@ -285,7 +285,7 @@ export default function AdminPage() {
 
           {loadingOrders ? (
             <div className="admin-empty">
-              <span>⏳</span>
+              <span></span>
 
               <strong>Memuat order...</strong>
 
@@ -293,7 +293,7 @@ export default function AdminPage() {
             </div>
           ) : recentOrders.length === 0 ? (
             <div className="admin-empty">
-              <span>📭</span>
+              <span className="text-icon">INFO</span>
 
               <strong>Belum ada order</strong>
 

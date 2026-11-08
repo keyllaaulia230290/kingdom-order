@@ -215,7 +215,7 @@ export default function CustomerPage() {
 
           {loading ? (
             <div className="admin-empty">
-              <span>⏳</span>
+              <span></span>
 
               <strong>Memuat customer...</strong>
 
@@ -223,7 +223,7 @@ export default function CustomerPage() {
             </div>
           ) : customers.length === 0 ? (
             <div className="admin-empty">
-              <span>👥</span>
+              <span className="text-icon">INFO</span>
 
               <strong>Belum ada customer</strong>
 
@@ -315,7 +315,7 @@ export default function CustomerPage() {
             </div>
 
             {errorMessage && (
-              <div className="customer-form-error">⚠️ {errorMessage}</div>
+              <div className="customer-form-error"> {errorMessage}</div>
             )}
 
             <div className="customer-form">
