@@ -19,22 +19,25 @@ export default function CekMasaAktifPage() {
   const [bot, setBot] = useState<BotAccount | null>(null);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function checkBot(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!search.trim()) {
-      alert("Masukkan Nama Bot atau IGG ID terlebih dahulu.");
+      setErrorMessage("Masukkan Nama Bot atau IGG ID terlebih dahulu.");
+      setSearched(false);
+      setBot(null);
       return;
     }
 
     setLoading(true);
     setSearched(true);
     setBot(null);
+    setErrorMessage("");
 
-    const keyword = search.trim();
+    const keyword = search.trim().replace(/[,%()]/g, "");
 
-    // Cari berdasarkan Nama Bot ATAU IGG ID
     const { data, error } = await supabase
       .from("bot_accounts")
       .select(
@@ -45,6 +48,7 @@ export default function CekMasaAktifPage() {
 
     if (error) {
       console.error("CHECK BOT ERROR:", error);
+      setErrorMessage("Pencarian belum berhasil. Silakan coba beberapa saat lagi.");
       setLoading(false);
       return;
     }
@@ -68,243 +72,183 @@ export default function CekMasaAktifPage() {
 
     const now = new Date();
     const expired = new Date(expiredAt);
-
     const diff = expired.getTime() - now.getTime();
 
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
   }
 
-  function getStatus() {
-    if (!bot) return null;
+  function getStatus(account: BotAccount) {
+    const days = getDaysLeft(account.expired_at);
 
-    const days = getDaysLeft(bot.expired_at);
-
-    if (days <= 0) {
-      return {
-        text: "EXPIRED",
-        className: "expired",
-      };
+    if (account.status === "suspended") {
+      return { text: "SUSPEND", className: "suspended" };
     }
 
-    if (bot.status === "suspended") {
-      return {
-        text: "SUSPEND",
-        className: "suspended",
-      };
+    if (days <= 0) {
+      return { text: "EXPIRED", className: "expired" };
     }
 
     if (days <= 3) {
-      return {
-        text: `H-${days}`,
-        className: "warning",
-      };
+      return { text: `H-${days}`, className: "warning" };
     }
 
-    return {
-      text: "AKTIF",
-      className: "active",
-    };
+    return { text: "AKTIF", className: "active" };
   }
 
   function openWhatsApp() {
     if (!bot) return;
 
-    const message = `Halo Admin AJRASTORE, saya ingin memperpanjang bot.
-
-Nama Bot: ${bot.nickname}
-IGG ID: ${bot.bot_code}
-
-Mohon informasi perpanjangannya.`;
-
-    const url = `https://wa.me/6285885385659?text=${encodeURIComponent(
-      message,
-    )}`;
-
-    window.open(url, "_blank");
+    const message = `Halo Admin AJRASTORE, saya ingin memperpanjang bot.\n\nNama Bot: ${bot.nickname}\nIGG ID: ${bot.bot_code}\n\nMohon informasi perpanjangannya.`;
+    const url = `https://wa.me/6285885385659?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
-  const status = getStatus();
+  const status = bot ? getStatus(bot) : null;
   const daysLeft = bot ? getDaysLeft(bot.expired_at) : 0;
 
   return (
-    <main className="admin-page">
-      <div className="admin-container">
-        {/* HEADER */}
+    <main className="expiry-page">
+      <div className="expiry-backdrop" aria-hidden="true" />
+      <div className="expiry-snow-layer" aria-hidden="true">
+        {Array.from({ length: 76 }, (_, i) => (
+          <span
+            key={i}
+            className="expiry-snow-particle"
+            style={{
+              left: `${(i * 29 + 7) % 100}%`,
+              animationDelay: `${(i % 19) * -0.65}s`,
+              animationDuration: `${2.8 + (i % 6) * 0.55}s`,
+              width: `${2 + (i % 4)}px`,
+              height: `${2 + (i % 4)}px`,
+            }}
+          />
+        ))}
+      </div>
+      <div className="expiry-glow expiry-glow-one" aria-hidden="true" />
+      <div className="expiry-glow expiry-glow-two" aria-hidden="true" />
 
-        <header className="admin-header">
-          <div>
-            <span className="admin-brand">AJRASTORE</span>
-
-            <h1>Cek Masa Aktif</h1>
-
-            <p>Cek status dan masa aktif bot kamu.</p>
-          </div>
-
-          <a href="/" className="admin-back">
-            ← HOME
+      <div className="expiry-container">
+        <header className="expiry-header">
+          <a href="/" className="expiry-brand" aria-label="AJRASTORE Beranda">
+            <img src="/ajra-logo.jpeg" alt="" />
+            <span>
+              <strong>AJRASTORE</strong>
+              <small>LORDSMOBILE SERVICE</small>
+            </span>
           </a>
+          <a href="/" className="expiry-home">BERANDA</a>
         </header>
 
-        {/* CARD */}
+        <section className="expiry-hero">
+          <span className="expiry-eyebrow">AJRASTORE BOT SERVICE</span>
+          <h1>CEK MASA <span>AKTIF</span></h1>
+          <p>Periksa status layanan bot, paket, dan tanggal berakhir secara praktis.</p>
+          <div className="expiry-hero-line">
+            <span /> DATA LAYANAN BOT AJRASTORE <span />
+          </div>
+        </section>
 
-        <section className="admin-card">
-          <div className="admin-card-header">
+        <section className="expiry-panel">
+          <div className="expiry-panel-heading">
             <div>
-              <span>BOT STATUS</span>
-
-              <h2>Cek Masa Aktif Bot</h2>
+              <span className="expiry-kicker">BOT ACCOUNT STATUS</span>
+              <h2>Temukan informasi bot kamu</h2>
+              <p>Masukkan nama bot atau IGG ID yang terdaftar.</p>
             </div>
+            <div className="expiry-panel-mark" aria-hidden="true">AJ</div>
           </div>
 
-          {/* SEARCH */}
-
-          <form onSubmit={checkBot} className="bot-check-form">
-            <div className="bot-input-group">
-              <label>NAMA BOT / IGG ID</label>
-
+          <form onSubmit={checkBot} className="expiry-search-form">
+            <label htmlFor="bot-search">NAMA BOT / IGG ID</label>
+            <div className="expiry-search-row">
               <input
+                id="bot-search"
                 type="text"
                 placeholder="Contoh: AJRA BOT 01 atau 123456789"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
+              <button type="submit" disabled={loading}>
+                {loading ? "MENCARI..." : "CEK SEKARANG"}
+              </button>
             </div>
-
-            <button
-              type="submit"
-              className="admin-primary-button"
-              disabled={loading}
-            >
-              {loading ? "MENCARI..." : " CEK SEKARANG"}
-            </button>
+            <small>Pastikan penulisan nama bot atau IGG ID sudah benar.</small>
           </form>
 
-          {/* NOT FOUND */}
+          {errorMessage && <div className="expiry-message expiry-message-error">{errorMessage}</div>}
 
-          {searched && !loading && !bot && (
-            <div className="admin-empty">
-              <span className="text-icon">INFO</span>
-
-              <strong>Bot tidak ditemukan</strong>
-
-              <p>
-                Pastikan Nama Bot atau IGG ID yang kamu masukkan sudah benar.
-              </p>
+          {searched && !loading && !bot && !errorMessage && (
+            <div className="expiry-message expiry-message-empty">
+              <span className="expiry-message-label">DATA TIDAK DITEMUKAN</span>
+              <strong>Bot belum ditemukan</strong>
+              <p>Periksa kembali Nama Bot atau IGG ID yang kamu masukkan.</p>
             </div>
           )}
 
-          {/* RESULT */}
+          {loading && (
+            <div className="expiry-loading">
+              <span className="expiry-loader" />
+              <p>Sedang memeriksa data bot...</p>
+            </div>
+          )}
 
           {bot && status && (
-            <div className="bot-check-result">
-              {/* RESULT HEADER */}
-
-              <div className="bot-result-header">
+            <div className="expiry-result">
+              <div className="expiry-result-top">
                 <div>
-                  <span>BOT ACCOUNT</span>
-
-                  <h2>{bot.nickname}</h2>
-
-                  <p>IGG ID: {bot.bot_code}</p>
+                  <span className="expiry-kicker">BOT ACCOUNT</span>
+                  <h3>{bot.nickname}</h3>
+                  <p>IGG ID: {bot.bot_code || "-"}</p>
                 </div>
-
-                <span className={`customer-status ${status.className}`}>
-                  {status.text}
-                </span>
+                <span className={`expiry-status ${status.className}`}>{status.text}</span>
               </div>
 
-              {/* DATA */}
-
-              <div className="bot-result-grid">
-                <div>
-                  <small>NAMA BOT</small>
-
-                  <strong>{bot.nickname}</strong>
-                </div>
-
-                <div>
-                  <small>IGG ID</small>
-
-                  <strong>{bot.bot_code || "-"}</strong>
-                </div>
-
-                <div>
-                  <small>PACKAGE</small>
-
-                  <strong>{bot.package || "-"}</strong>
-                </div>
-
-                <div>
-                  <small>STATUS</small>
-
-                  <strong>{status.text}</strong>
-                </div>
-
-                <div>
-                  <small>MULAI</small>
-
-                  <strong>{formatDate(bot.started_at)}</strong>
-                </div>
-
-                <div>
-                  <small>EXPIRED</small>
-
-                  <strong>{formatDate(bot.expired_at)}</strong>
-                </div>
+              <div className="expiry-data-grid">
+                <div><small>NAMA BOT</small><strong>{bot.nickname || "-"}</strong></div>
+                <div><small>IGG ID</small><strong>{bot.bot_code || "-"}</strong></div>
+                <div><small>PAKET</small><strong>{bot.package || "-"}</strong></div>
+                <div><small>STATUS</small><strong>{status.text}</strong></div>
+                <div><small>TANGGAL MULAI</small><strong>{formatDate(bot.started_at)}</strong></div>
+                <div><small>TANGGAL EXPIRED</small><strong>{formatDate(bot.expired_at)}</strong></div>
               </div>
 
-              {/* DAYS */}
-
-              <div className="bot-days-card">
+              <div className={`expiry-days-card ${daysLeft <= 3 ? "is-warning" : ""}`}>
                 <small>SISA MASA AKTIF</small>
-
-                <strong>
-                  {daysLeft <= 0
-                    ? "Masa aktif telah habis"
-                    : `${daysLeft} hari`}
-                </strong>
+                <strong>{daysLeft <= 0 ? "MASA AKTIF HABIS" : `${daysLeft} HARI`}</strong>
+                <p>{daysLeft <= 0 ? "Layanan ini telah melewati tanggal berakhir." : "Hitungan berdasarkan tanggal berakhir layanan."}</p>
               </div>
-
-              {/* WARNING 3 DAYS */}
 
               {daysLeft > 0 && daysLeft <= 3 && (
-                <div className="bot-warning">
-                   Masa aktif bot kamu akan segera berakhir. Silakan lakukan
-                  perpanjangan.
-                </div>
+                <div className="expiry-notice">Masa aktif bot akan segera berakhir. Hubungi admin untuk melakukan perpanjangan.</div>
               )}
 
-              {/* EXPIRED */}
-
               {daysLeft <= 0 && (
-                <>
-                  <div className="bot-warning">
-                     Masa aktif bot ini sudah berakhir. Silakan lakukan
-                    perpanjangan untuk mengaktifkannya kembali.
+                <div className="expiry-renew-box">
+                  <div>
+                    <strong>Perpanjang layanan bot</strong>
+                    <p>Hubungi Admin AJRASTORE untuk informasi perpanjangan.</p>
                   </div>
-
-                  {/* WHATSAPP */}
-
-                  <button
-                    type="button"
-                    onClick={openWhatsApp}
-                    className="bot-whatsapp-renew"
-                  >
-                    <span className="bot-whatsapp-icon">CS</span>
-
-                    <span className="bot-whatsapp-content">
-                      <strong>Perpanjang Bot</strong>
-
-                      <small>Hubungi Admin melalui WhatsApp</small>
-                    </span>
-
-                    <span className="bot-whatsapp-arrow">→</span>
-                  </button>
-                </>
+                  <button type="button" onClick={openWhatsApp}>HUBUNGI ADMIN</button>
+                </div>
               )}
             </div>
           )}
         </section>
+
+        <section className="expiry-help-strip">
+          <div>
+            <span className="expiry-kicker">BUTUH BANTUAN?</span>
+            <strong>Tim AJRASTORE siap membantu.</strong>
+            <p>Hubungi customer service jika mengalami kendala saat pengecekan.</p>
+          </div>
+          <a href="https://wa.me/6285885385659" target="_blank" rel="noreferrer">HUBUNGI CUSTOMER SERVICE</a>
+        </section>
+
+        <footer className="expiry-footer">
+          <a href="/" className="expiry-footer-brand">AJRASTORE</a>
+          <span>Solusi kebutuhan Lords Mobile</span>
+          <small>© {new Date().getFullYear()} AJRASTORE. All rights reserved.</small>
+        </footer>
       </div>
     </main>
   );

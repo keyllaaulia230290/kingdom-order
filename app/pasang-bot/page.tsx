@@ -127,28 +127,28 @@ export default function PasangBot() {
 
           <div className="feature-grid">
             {[
-              ["AUTO", "Auto Shield & Anti"],
-              ["QUEST", "Auto Daily Quest"],
-              ["GUILD", "Send Help & Collect Gifts"],
-              ["RSS", "Auto Supply RSS"],
-              ["MINE", "Nambang & Realm"],
-              ["RALLY", "Join Rally Darknest"],
-              ["CARGO", "Auto Cargo"],
-              ["HERO", "Hero Stage"],
-              ["ARENA", "Auto Colosseum"],
-              ["BUILD", "Auto Build"],
-              ["TECH", "Auto Research"],
-              ["HEAL", "Auto Heal"],
-              ["TRAIN", "Auto Train"],
-              ["HUNT", "Attack Monster"],
-              ["PACT", "Auto Familiar"],
-              ["BANK", "Guild Bank"],
-              ["BLOCK", "Blacklist"],
-              ["ALLOW", "Whitelist"],
-              ["MORE", "Dan Lain-lain"],
+              ["🛡️", "Auto Shield & Anti"],
+              ["📜", "Auto Daily Quest"],
+              ["🏰", "Send Help & Collect Gifts"],
+              ["📦", "Auto Supply RSS"],
+              ["⛏️", "Nambang & Realm"],
+              ["⚔️", "Join Rally Darknest"],
+              ["🚢", "Auto Cargo"],
+              ["🦸", "Hero Stage"],
+              ["🏆", "Auto Colosseum"],
+              ["🏗️", "Auto Build"],
+              ["🔬", "Auto Research"],
+              ["❤️", "Auto Heal"],
+              ["⚔️", "Auto Train"],
+              ["🐉", "Attack Monster"],
+              ["🔮", "Auto Familiar"],
+              ["🏦", "Guild Bank"],
+              ["⛔", "Blacklist"],
+              ["✅", "Whitelist"],
+              ["＋", "Dan Lain-lain"],
             ].map(([icon, title]) => (
               <div className="feature-card" key={title}>
-                <span>{icon}</span>
+                <span className="feature-emoji" aria-hidden="true">{icon}</span>
                 <strong>{title}</strong>
               </div>
             ))}
